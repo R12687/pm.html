@@ -1,0 +1,2590 @@
+import React, { useState, useMemo } from 'react';
+import { 
+  TrendingUp, 
+  Sliders, 
+  Settings, 
+  Award, 
+  Layers, 
+  PieChart, 
+  Activity, 
+  Target, 
+  BookOpen,
+  DollarSign,
+  AlertTriangle,
+  Brain,
+  SlidersHorizontal,
+  Info,
+  CheckCircle,
+  HelpCircle,
+  TrendingDown,
+  ArrowRight,
+  Book,
+  XCircle,
+  FileText,
+  UserCheck,
+  RotateCw,
+  Zap,
+  ChevronRight,
+  RefreshCw,
+  Calculator,
+  Grid,
+  Shield,
+  Leaf,
+  Users,
+  Search
+} from 'lucide-react';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('pricing');
+  const [pricingSubTab, setPricingSubTab] = useState('theory-costplus');
+  const [riskSubTab, setRiskSubTab] = useState('theory-risk');
+  const [budgetSubTab, setBudgetSubTab] = useState('theory-purposes');
+  const [analyticsSubTab, setAnalyticsSubTab] = useState('theory-learning');
+
+  // ==========================================
+  // STATE: CHAPTER 7: PRICING
+  // ==========================================
+  const [directMaterials, setDirectMaterials] = useState(12.00);
+  const [directLabor, setDirectLabor] = useState(28.00);
+  const [varProdOverhead, setVarProdOverhead] = useState(3.50);
+  const [varNonProdOverhead, setVarNonProdOverhead] = useState(1.50);
+  const [fixedProdOverhead, setFixedProdOverhead] = useState(144000);
+  const [fixedNonProdOverhead, setFixedNonProdOverhead] = useState(72000);
+  const [budgetSalesUnits, setBudgetSalesUnits] = useState(18000);
+
+  const [marginalMarkup, setMarginalMarkup] = useState(80);
+  const [absorptionMarkup, setAbsorptionMarkup] = useState(25);
+
+  const [nonCurrentAssets, setNonCurrentAssets] = useState(750000);
+  const [workingCapital, setWorkingCapital] = useState(150000);
+  const [targetRoi, setTargetRoi] = useState(16);
+
+  // Economist Model Intercepts
+  const [econP1, setEconP1] = useState(100.00);
+  const [econQ1, setEconQ1] = useState(1000);
+  const [econP2, setEconP2] = useState(80.00);
+  const [econQ2, setEconQ2] = useState(2000);
+  const [economistMC, setEconomistMC] = useState(30.00);
+
+  // PED Parameters
+  const [pedBasePrice, setPedBasePrice] = useState(50);
+  const [pedNewPrice, setPedNewPrice] = useState(45);
+  const [pedBaseQty, setPedBaseQty] = useState(1000);
+  const [pedNewQty, setPedNewQty] = useState(1200);
+
+  // ==========================================
+  // STATE: CHAPTER 8: RISK & UNCERTAINTY
+  // ==========================================
+  const [payoffSmallCold, setPayoffSmallCold] = useState(250);
+  const [payoffSmallWarm, setPayoffSmallWarm] = useState(200);
+  const [payoffSmallHot, setPayoffSmallHot] = useState(150);
+
+  const [payoffMedCold, setPayoffMedCold] = useState(200);
+  const [payoffMedWarm, setPayoffMedWarm] = useState(500);
+  const [payoffMedHot, setPayoffMedHot] = useState(300);
+
+  const [payoffLargeCold, setPayoffLargeCold] = useState(100);
+  const [payoffLargeWarm, setPayoffLargeWarm] = useState(300);
+  const [payoffLargeHot, setPayoffLargeHot] = useState(750);
+
+  const [probCold, setProbCold] = useState(30);
+  const [probWarm, setProbWarm] = useState(50);
+  const [probHot, setProbHot] = useState(20);
+
+  // Sensitivity Variables
+  const [sensitiveRevenue, setSensitiveRevenue] = useState(100000);
+  const [sensitiveVarCost, setSensitiveVarCost] = useState(60000);
+  const [sensitiveFixedCost, setSensitiveFixedCost] = useState(30000);
+
+  // Decision Tree Parameters
+  const [dtProbSuccess, setDtProbSuccess] = useState(65);
+  const [dtA_success, setDtA_success] = useState(150000);
+  const [dtA_failure, setDtA_failure] = useState(20000);
+  const [dtB_success, setDtB_success] = useState(110000);
+  const [dtB_failure, setDtB_failure] = useState(50000);
+
+  // ==========================================
+  // STATE: CHAPTER 9: BUDGETARY SYSTEMS
+  // ==========================================
+  const [budgetUnits, setBudgetUnits] = useState(10000);
+  const [actualUnits, setActualUnits] = useState(12000);
+  const [fixedUnitRevenue, setFixedUnitRevenue] = useState(10.00);
+  const [fixedUnitVarCost, setFixedUnitVarCost] = useState(4.50);
+  const [fixedBudgetOverhead, setFixedBudgetOverhead] = useState(25000);
+
+  // ==========================================
+  // STATE: CHAPTER 10: ANALYTICAL TECHNIQUES
+  // ==========================================
+  const [timeUnit1, setTimeUnit1] = useState(100);
+  const [learnRatePct, setLearnRatePct] = useState(80);
+  const [cumulativeQtyX, setCumulativeQtyX] = useState(16);
+
+  const [highVolume, setHighVolume] = useState(4000);
+  const [highCost, setHighCost] = useState(38000);
+  const [lowVolume, setLowVolume] = useState(1500);
+  const [lowCost, setLowCost] = useState(23000);
+
+  // REGRESSION GRID EDITABLE STATE
+  const [regPoint1X, setRegPoint1X] = useState(1000);
+  const [regPoint1Y, setRegPoint1Y] = useState(15000);
+  const [regPoint2X, setRegPoint2X] = useState(2000);
+  const [regPoint2Y, setRegPoint2Y] = useState(22000);
+  const [regPoint3X, setRegPoint3X] = useState(3000);
+  const [regPoint3Y, setRegPoint3Y] = useState(31000);
+  const [regPoint4X, setRegPoint4X] = useState(4000);
+  const [regPoint4Y, setRegPoint4Y] = useState(38000);
+  const [regPoint5X, setRegPoint5X] = useState(5000);
+  const [regPoint5Y, setRegPoint5Y] = useState(47000);
+
+  // ==========================================
+  // STATE: DYNAMIC PRACTICE GENERATOR (NON-FIXED)
+  // ==========================================
+  const [activeQuizType, setActiveQuizType] = useState('roi'); 
+  const [quizState, setQuizState] = useState(() => generateNewQuiz('roi'));
+  const [userAnswer, setUserAnswer] = useState('');
+  const [userAnswer2, setUserAnswer2] = useState('');
+  const [quizFeedback, setQuizFeedback] = useState(null);
+
+  // Helper to generate dynamic randomized values
+  function generateNewQuiz(type) {
+    if (type === 'roi') {
+      const nca = Math.floor(Math.random() * 6 + 4) * 100000; 
+      const wc = Math.floor(Math.random() * 11 + 5) * 10000;   
+      const roi = Math.floor(Math.random() * 11 + 10);        
+      const fullCost = Math.floor(Math.random() * 21 + 10);   
+      const units = Math.floor(Math.random() * 5 + 1) * 10000; 
+      
+      const cap = nca + wc;
+      const profit = cap * (roi / 100);
+      const unitMarkup = profit / units;
+      const targetAns = parseFloat((fullCost + unitMarkup).toFixed(2));
+
+      return { nca, wc, roi, fullCost, units, targetAns };
+    }
+    if (type === 'ped') {
+      const p1 = Math.floor(Math.random() * 6 + 10) * 5; 
+      const p2 = p1 - 5;                                 
+      const q1 = Math.floor(Math.random() * 6 + 5) * 200; 
+      const q2 = Math.floor(q1 * (1.1 + Math.random() * 0.3)); 
+
+      const priceChange = ((p2 - p1) / p1);
+      const qtyChange = ((q2 - q1) / q1);
+      const ped = Math.abs(qtyChange / priceChange);
+      const targetAns = parseFloat(ped.toFixed(2));
+      const classification = ped > 1 ? 'elastic' : 'inelastic';
+
+      return { p1, p2, q1, q2, targetAns, classification };
+    }
+    if (type === 'learning') {
+      const a = Math.floor(Math.random() * 11 + 8) * 10; 
+      const rate = [75, 80, 85, 90][Math.floor(Math.random() * 4)];
+      const x = [2, 4, 8, 16][Math.floor(Math.random() * 4)]; 
+
+      const b = Math.log(rate / 100) / Math.log(2);
+      const avgY = a * Math.pow(x, b);
+      const totalTime = avgY * x;
+      const targetAvg = parseFloat(avgY.toFixed(2));
+      const targetTotal = parseFloat(totalTime.toFixed(1));
+
+      return { a, rate, x, targetAvg, targetTotal };
+    }
+    if (type === 'highlow') {
+      const lowV = Math.floor(Math.random() * 5 + 1) * 500; 
+      const highV = lowV + Math.floor(Math.random() * 6 + 5) * 500; 
+      const variableRate = Math.floor(Math.random() * 6 + 3); 
+      const fixedBase = Math.floor(Math.random() * 5 + 1) * 5000; 
+
+      const lowC = fixedBase + (lowV * variableRate);
+      const highC = fixedBase + (highV * variableRate);
+
+      return { lowV, highV, lowC, highC, targetVar: variableRate, targetFixed: fixedBase };
+    }
+  }
+
+  const handleNextQuiz = (type) => {
+    setActiveQuizType(type);
+    setQuizState(generateNewQuiz(type));
+    setUserAnswer('');
+    setUserAnswer2('');
+    setQuizFeedback(null);
+  };
+
+  const handleCheckQuiz = () => {
+    if (activeQuizType === 'roi') {
+      const parsedAns = parseFloat(parseFloat(userAnswer).toFixed(2));
+      const isCorrect = parsedAns === quizState.targetAns;
+      setQuizFeedback({
+        correct: isCorrect,
+        text: isCorrect 
+          ? `Correct! Capital Employed = $${(quizState.nca + quizState.wc).toLocaleString()}. Required Return = $${(quizState.nca + quizState.wc).toLocaleString()} * ${quizState.roi}% = $${( (quizState.nca+quizState.wc)*(quizState.roi/100) ).toLocaleString()}. Per unit = $${( (quizState.nca+quizState.wc)*(quizState.roi/100) / quizState.units ).toFixed(2)}. Total ROI Selling Price = $${quizState.fullCost.toFixed(2)} + $${( (quizState.nca+quizState.wc)*(quizState.roi/100) / quizState.units ).toFixed(2)} = $${quizState.targetAns.toFixed(2)}.`
+          : `Incorrect. Target was $${quizState.targetAns.toFixed(2)}. Verify your capital employed, required return, and markup per unit.`
+      });
+    }
+    if (activeQuizType === 'ped') {
+      const parsedAns = parseFloat(parseFloat(userAnswer).toFixed(2));
+      const classAns = userAnswer2.trim().toLowerCase();
+      const isCorrectValue = Math.abs(parsedAns - quizState.targetAns) <= 0.05;
+      const isCorrectClass = classAns === quizState.classification;
+
+      setQuizFeedback({
+        correct: isCorrectValue && isCorrectClass,
+        text: isCorrectValue && isCorrectClass
+          ? `Superb! Price change: ${(((quizState.p2 - quizState.p1)/quizState.p1)*100).toFixed(1)}%. Quantity change: ${(((quizState.q2 - quizState.q1)/quizState.q1)*100).toFixed(1)}%. PED = ${quizState.targetAns}. This is Classified as ${quizState.classification.toUpperCase()}.`
+          : `Almost! Correct PED value: ${quizState.targetAns} (${quizState.classification.toUpperCase()}). Check your percentages.`
+      });
+    }
+    if (activeQuizType === 'learning') {
+      const parsedAvg = parseFloat(parseFloat(userAnswer).toFixed(2));
+      const parsedTot = parseFloat(parseFloat(userAnswer2).toFixed(1));
+      const isCorrectAvg = Math.abs(parsedAvg - quizState.targetAvg) <= 0.1;
+      const isCorrectTot = Math.abs(parsedTot - quizState.targetTotal) <= 1.0;
+
+      setQuizFeedback({
+        correct: isCorrectAvg && isCorrectTot,
+        text: isCorrectAvg && isCorrectTot
+          ? `Perfect! Cumulative Avg Time = ${quizState.targetAvg} hrs. Total Cumulative Time = ${quizState.targetTotal} hrs.`
+          : `Check your calculations. Correct Cumulative Average: ${quizState.targetAvg} hrs, Correct Total Time: ${quizState.targetTotal} hrs.`
+      });
+    }
+    if (activeQuizType === 'highlow') {
+      const parsedVar = parseFloat(parseFloat(userAnswer).toFixed(2));
+      const parsedFixed = parseInt(userAnswer2);
+      const isCorrectVar = parsedVar === quizState.targetVar;
+      const isCorrectFixed = parsedFixed === quizState.targetFixed;
+
+      setQuizFeedback({
+        correct: isCorrectVar && isCorrectFixed,
+        text: isCorrectVar && isCorrectFixed
+          ? `Correct! Variable cost = $${quizState.targetVar}/unit. Total Fixed Costs = $${quizState.targetFixed.toLocaleString()}.`
+          : `Let's practice again. Variable cost = $${quizState.targetVar}/unit, Fixed Costs = $${quizState.targetFixed.toLocaleString()}.`
+      });
+    }
+  };
+
+  // ==========================================
+  // SYSTEM-WIDE CALCULATIONS: MASTER OBJECT
+  // ==========================================
+
+  // Pricing Calculations
+  const pricingCalculations = useMemo(() => {
+    const fixedProdPerUnit = fixedProdOverhead / budgetSalesUnits;
+    const fixedNonProdPerUnit = fixedNonProdOverhead / budgetSalesUnits;
+
+    // Full Cost Stack
+    const unitFullCost = directMaterials + directLabor + varProdOverhead + fixedProdPerUnit + varNonProdOverhead + fixedNonProdPerUnit;
+    const fullCostMarkupVal = unitFullCost * (absorptionMarkup / 100);
+    const fullCostSellingPrice = unitFullCost + fullCostMarkupVal;
+
+    // Variable Cost Stack
+    const unitVarCost = directMaterials + directLabor + varProdOverhead + varNonProdOverhead;
+    const varCostMarkupVal = unitVarCost * (marginalMarkup / 100);
+    const varCostSellingPrice = unitVarCost + varCostMarkupVal;
+
+    // ROI Base
+    const totalCapitalEmployed = nonCurrentAssets + workingCapital;
+    const requiredProfitAnnual = totalCapitalEmployed * (targetRoi / 100);
+    const requiredProfitPerUnit = requiredProfitAnnual / budgetSalesUnits;
+    const roiSellingPrice = unitFullCost + requiredProfitPerUnit;
+
+    return {
+      fixedProdPerUnit,
+      fixedNonProdPerUnit,
+      unitFullCost,
+      fullCostSellingPrice,
+      unitVarCost,
+      varCostSellingPrice,
+      totalCapitalEmployed,
+      requiredProfitAnnual,
+      requiredProfitPerUnit,
+      roiSellingPrice
+    };
+  }, [
+    directMaterials, directLabor, varProdOverhead, varNonProdOverhead,
+    fixedProdOverhead, fixedNonProdOverhead, budgetSalesUnits, absorptionMarkup,
+    marginalMarkup, nonCurrentAssets, workingCapital, targetRoi
+  ]);
+
+  // Economist Model Point variables
+  const economistSolutions = useMemo(() => {
+    const deltaP = econP1 - econP2;
+    const deltaQ = econQ2 - econQ1;
+    if (deltaQ === 0) return null;
+
+    const b = deltaP / deltaQ; 
+    const a = econP1 + (b * econQ1); 
+    const mc = economistMC; 
+
+    // MR = MC => a - 2bQ = MC => Q_opt = (a - MC) / 2b
+    const qOpt = (a - mc) / (2 * b);
+    const pOpt = a - (b * qOpt); 
+    const maxProfitContribution = (pOpt - mc) * qOpt;
+
+    return {
+      b: b.toFixed(5),
+      a: a.toFixed(2),
+      mc: mc.toFixed(2),
+      qOpt: qOpt > 0 ? Math.round(qOpt) : 0,
+      pOpt: qOpt > 0 ? pOpt.toFixed(2) : a.toFixed(2),
+      maxProfitContribution: qOpt > 0 ? maxProfitContribution.toFixed(2) : "0.00"
+    };
+  }, [econP1, econQ1, econP2, econQ2, economistMC]);
+
+  // Price Elasticity of Demand (PED)
+  const pedAnalysis = useMemo(() => {
+    if (pedBasePrice === 0 || pedBaseQty === 0) return null;
+    const priceChangePct = ((pedNewPrice - pedBasePrice) / pedBasePrice) * 100;
+    const qtyChangePct = ((pedNewQty - pedBaseQty) / pedBaseQty) * 100;
+    if (priceChangePct === 0) return null;
+
+    const rawPed = qtyChangePct / priceChangePct;
+    const pedVal = Math.abs(rawPed);
+    const isElastic = pedVal > 1;
+
+    return {
+      priceChangePct: priceChangePct.toFixed(1),
+      qtyChangePct: qtyChangePct.toFixed(1),
+      rawPed: rawPed.toFixed(2),
+      pedVal: pedVal.toFixed(2),
+      isElastic,
+      verdict: isElastic
+        ? "Elastic (highly responsive). A price reduction will increase total revenue."
+        : "Inelastic (low sensitivity). A price increase will expand total revenue."
+    };
+  }, [pedBasePrice, pedNewPrice, pedBaseQty, pedNewQty]);
+
+  // Chapter 8 Risk Matrices
+  const riskDecisions = useMemo(() => {
+    const matrix = {
+      Small: { cold: payoffSmallCold, warm: payoffSmallWarm, hot: payoffSmallHot },
+      Medium: { cold: payoffMedCold, warm: payoffMedWarm, hot: payoffMedHot },
+      Large: { cold: payoffLargeCold, warm: payoffLargeWarm, hot: payoffLargeHot }
+    };
+
+    // Maximax (Risky seeker)
+    const maxPayoffs = {
+      Small: Math.max(matrix.Small.cold, matrix.Small.warm, matrix.Small.hot),
+      Medium: Math.max(matrix.Medium.cold, matrix.Medium.warm, matrix.Medium.hot),
+      Large: Math.max(matrix.Large.cold, matrix.Large.warm, matrix.Large.hot)
+    };
+    let maximaxDecision = 'Small';
+    if (maxPayoffs.Medium > maxPayoffs[maximaxDecision]) maximaxDecision = 'Medium';
+    if (maxPayoffs.Large > maxPayoffs[maximaxDecision]) maximaxDecision = 'Large';
+
+    // Maximin (Pessimist)
+    const minPayoffs = {
+      Small: Math.min(matrix.Small.cold, matrix.Small.warm, matrix.Small.hot),
+      Medium: Math.min(matrix.Medium.cold, matrix.Medium.warm, matrix.Medium.hot),
+      Large: Math.min(matrix.Large.cold, matrix.Large.warm, matrix.Large.hot)
+    };
+    let maximinDecision = 'Small';
+    if (minPayoffs.Medium > minPayoffs[maximinDecision]) maximinDecision = 'Medium';
+    if (minPayoffs.Large > minPayoffs[maximinDecision]) maximinDecision = 'Large';
+
+    // Minimax Regret
+    const bestCold = Math.max(matrix.Small.cold, matrix.Medium.cold, matrix.Large.cold);
+    const bestWarm = Math.max(matrix.Small.warm, matrix.Medium.warm, matrix.Large.warm);
+    const bestHot = Math.max(matrix.Small.hot, matrix.Medium.hot, matrix.Large.hot);
+
+    const regret = {
+      Small: {
+        cold: bestCold - matrix.Small.cold,
+        warm: bestWarm - matrix.Small.warm,
+        hot: bestHot - matrix.Small.hot
+      },
+      Medium: {
+        cold: bestCold - matrix.Medium.cold,
+        warm: bestWarm - matrix.Medium.warm,
+        hot: bestHot - matrix.Medium.hot
+      },
+      Large: {
+        cold: bestCold - matrix.Large.cold,
+        warm: bestWarm - matrix.Large.warm,
+        hot: bestHot - matrix.Large.hot
+      }
+    };
+
+    const maxRegrets = {
+      Small: Math.max(regret.Small.cold, regret.Small.warm, regret.Small.hot),
+      Medium: Math.max(regret.Medium.cold, regret.Medium.warm, regret.Medium.hot),
+      Large: Math.max(regret.Large.cold, regret.Large.warm, regret.Large.hot)
+    };
+
+    let minimaxRegretDecision = 'Small';
+    if (maxRegrets.Medium < maxRegrets[minimaxRegretDecision]) minimaxRegretDecision = 'Medium';
+    if (maxRegrets.Large < maxRegrets[minimaxRegretDecision]) minimaxRegretDecision = 'Large';
+
+    // Expected Value
+    const pC = probCold / 100;
+    const pW = probWarm / 100;
+    const pH = probHot / 100;
+
+    const evs = {
+      Small: matrix.Small.cold * pC + matrix.Small.warm * pW + matrix.Small.hot * pH,
+      Medium: matrix.Medium.cold * pC + matrix.Medium.warm * pW + matrix.Medium.hot * pH,
+      Large: matrix.Large.cold * pC + matrix.Large.warm * pW + matrix.Large.hot * pH
+    };
+
+    let maxEvDecision = 'Small';
+    if (evs.Medium > evs[maxEvDecision]) maxEvDecision = 'Medium';
+    if (evs.Large > evs[maxEvDecision]) maxEvDecision = 'Large';
+
+    // EVPI
+    const evWithPI = bestCold * pC + bestWarm * pW + bestHot * pH;
+    const evpiValue = evWithPI - evs[maxEvDecision];
+
+    return {
+      maxPayoffs,
+      maximaxDecision,
+      minPayoffs,
+      maximinDecision,
+      regret,
+      maxRegrets,
+      minimaxRegretDecision,
+      bestCold,
+      bestWarm,
+      bestHot,
+      evs,
+      maxEvDecision,
+      evWithPI,
+      evpiValue
+    };
+  }, [
+    payoffSmallCold, payoffSmallWarm, payoffSmallHot,
+    payoffMedCold, payoffMedWarm, payoffMedHot,
+    payoffLargeCold, payoffLargeWarm, payoffLargeHot,
+    probCold, probWarm, probHot
+  ]);
+
+  // Sensitivity Calculations
+  const sensitivityAnalysis = useMemo(() => {
+    const profit = sensitiveRevenue - sensitiveVarCost - sensitiveFixedCost;
+    const revSensitivity = sensitiveRevenue !== 0 ? (profit / sensitiveRevenue) * 100 : 0;
+    const varSensitivity = sensitiveVarCost !== 0 ? (profit / sensitiveVarCost) * 100 : 0;
+    const fixedSensitivity = sensitiveFixedCost !== 0 ? (profit / sensitiveFixedCost) * 100 : 0;
+
+    return {
+      profit,
+      revSensitivity: revSensitivity.toFixed(1),
+      varSensitivity: varSensitivity.toFixed(1),
+      fixedSensitivity: fixedSensitivity.toFixed(1)
+    };
+  }, [sensitiveRevenue, sensitiveVarCost, sensitiveFixedCost]);
+
+  // Decision Tree Calculations
+  const decisionTreeCalculations = useMemo(() => {
+    const pSuccess = dtProbSuccess / 100;
+    const pFailure = 1 - pSuccess;
+
+    const evProductA = (dtA_success * pSuccess) + (dtA_failure * pFailure);
+    const evProductB = (dtB_success * pSuccess) + (dtB_failure * pFailure);
+
+    const optimalChoice = evProductA > evProductB ? 'Product A' : 'Product B';
+    const optimalEV = Math.max(evProductA, evProductB);
+
+    return {
+      evProductA,
+      evProductB,
+      pSuccess,
+      pFailure,
+      optimalChoice,
+      optimalEV
+    };
+  }, [dtProbSuccess, dtA_success, dtA_failure, dtB_success, dtB_failure]);
+
+  // Chapter 9 Budgeting Calculations
+  const flexedBudgetResults = useMemo(() => {
+    const fixedRev = budgetUnits * fixedUnitRevenue;
+    const fixedVar = budgetUnits * fixedUnitVarCost;
+    const fixedProfit = fixedRev - fixedVar - fixedBudgetOverhead;
+
+    const flexedRev = actualUnits * fixedUnitRevenue;
+    const flexedVar = actualUnits * fixedUnitVarCost;
+    const flexedProfit = flexedRev - flexedVar - fixedBudgetOverhead;
+
+    return {
+      fixedRev,
+      fixedVar,
+      fixedProfit,
+      flexedRev,
+      flexedVar,
+      flexedProfit
+    };
+  }, [budgetUnits, actualUnits, fixedUnitRevenue, fixedUnitVarCost, fixedBudgetOverhead]);
+
+  // Chapter 10 Analytical Techniques: Learning Curve
+  const learningCalculations = useMemo(() => {
+    const lr = learnRatePct / 100;
+    const b = Math.log(lr) / Math.log(2); 
+    
+    const avgTimeX = timeUnit1 * Math.pow(cumulativeQtyX, b);
+    const totalTimeX = avgTimeX * cumulativeQtyX;
+
+    const prevQty = cumulativeQtyX - 1;
+    let totalTimePrev = 0;
+    if (prevQty > 0) {
+      const avgTimePrev = timeUnit1 * Math.pow(prevQty, b);
+      totalTimePrev = avgTimePrev * prevQty;
+    }
+    const incrementalX = totalTimeX - totalTimePrev;
+
+    const steps = [1, 2, 4, 8, 16, 32, 64].filter(v => v <= cumulativeQtyX || v <= 16);
+    const progressTable = steps.map(v => {
+      const avg = timeUnit1 * Math.pow(v, b);
+      return {
+        qty: v,
+        avg: avg.toFixed(1),
+        total: (avg * v).toFixed(1)
+      };
+    });
+
+    return {
+      b: b.toFixed(5),
+      avgTimeX: avgTimeX.toFixed(2),
+      totalTimeX: totalTimeX.toFixed(1),
+      incrementalX: incrementalX.toFixed(1),
+      progressTable
+    };
+  }, [timeUnit1, learnRatePct, cumulativeQtyX]);
+
+  // High-Low Method Calculations
+  const highLowSolutions = useMemo(() => {
+    const deltaV = highVolume - lowVolume;
+    const deltaC = highCost - lowCost;
+    if (deltaV === 0) return null;
+
+    const varCostPerUnit = deltaC / deltaV; 
+    const fixedCosts = highCost - (varCostPerUnit * highVolume); 
+
+    return {
+      varCostPerUnit: varCostPerUnit.toFixed(2),
+      fixedCosts: fixedCosts.toFixed(0)
+    };
+  }, [highVolume, highCost, lowVolume, lowCost]);
+
+  // High-Precision Linear Regression & Correlation Calculator
+  const regressionResults = useMemo(() => {
+    const data = [
+      { x: regPoint1X, y: regPoint1Y },
+      { x: regPoint2X, y: regPoint2Y },
+      { x: regPoint3X, y: regPoint3Y },
+      { x: regPoint4X, y: regPoint4Y },
+      { x: regPoint5X, y: regPoint5Y },
+    ];
+
+    const n = data.length;
+    const sumX = data.reduce((acc, curr) => acc + curr.x, 0);
+    const sumY = data.reduce((acc, curr) => acc + curr.y, 0);
+    const sumXY = data.reduce((acc, curr) => acc + (curr.x * curr.y), 0);
+    const sumX2 = data.reduce((acc, curr) => acc + (curr.x * curr.x), 0);
+    const sumY2 = data.reduce((acc, curr) => acc + (curr.y * curr.y), 0);
+
+    const numB = (n * sumXY) - (sumX * sumY);
+    const denB = (n * sumX2) - (sumX * sumX);
+    if (denB === 0) return null;
+
+    const b = numB / denB;
+    const a = (sumY / n) - (b * (sumX / n));
+
+    const numR = (n * sumXY) - (sumX * sumY);
+    const denR = Math.sqrt( ((n * sumX2) - (sumX * sumX)) * ((n * sumY2) - (sumY * sumY)) );
+    const r = denR !== 0 ? numR / denR : 0;
+    const r2 = r * r;
+
+    return {
+      sumX,
+      sumY,
+      sumXY,
+      sumX2,
+      sumY2,
+      b: b.toFixed(4),
+      a: a.toFixed(2),
+      r: r.toFixed(4),
+      r2: r2.toFixed(4)
+    };
+  }, [
+    regPoint1X, regPoint1Y,
+    regPoint2X, regPoint2Y,
+    regPoint3X, regPoint3Y,
+    regPoint4X, regPoint4Y,
+    regPoint5X, regPoint5Y,
+  ]);
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans flex flex-col antialiased selection:bg-indigo-100 selection:text-indigo-900">
+      
+      {/* ========================================== */}
+      {/* TOP PORTAL HEADER BAR                      */}
+      {/* ========================================== */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4 shadow-sm">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-tr from-indigo-500 to-indigo-600 p-2.5 rounded-xl text-white shadow-md shadow-indigo-200">
+              <Brain className="w-5 h-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-extrabold tracking-tight text-slate-900">
+                Performance Management Portal
+              </h1>
+              <p className="text-xs text-indigo-600 font-bold tracking-wider uppercase">
+                Chapters 7, 8, 9 & 10 Quick Revision & Simulators
+              </p>
+            </div>
+          </div>
+          
+          {/* Main Tab Switcher */}
+          <nav className="flex flex-wrap gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+            {[
+              { id: 'pricing', label: 'Ch 7: Pricing', icon: <PieChart className="w-4 h-4" /> },
+              { id: 'risk', label: 'Ch 8: Risk & Uncertainty', icon: <AlertTriangle className="w-4 h-4" /> },
+              { id: 'budget', label: 'Ch 9: Budgeting Systems', icon: <SlidersHorizontal className="w-4 h-4" /> },
+              { id: 'analytics', label: 'Ch 10: Analytical Techniques', icon: <Activity className="w-4 h-4" /> },
+              { id: 'practice', label: 'Dynamic Practice Arena', icon: <Award className="w-4 h-4" /> }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-3 py-2 rounded-lg text-xs font-bold tracking-wide transition-all duration-200 flex items-center ${
+                  activeTab === tab.id
+                    ? 'bg-white text-indigo-600 shadow-sm border border-slate-200/50'
+                    : 'text-slate-50 hover:text-slate-900 hover:bg-slate-200/60'
+                }`}
+              >
+                {tab.icon}
+                <span className="ml-1">{tab.label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* --- Main Dashboard Container --- */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-6 py-8">
+        
+        {/* ========================================================================= */}
+        {/* CHAPTER 7: PRICING TAB                                                    */}
+        {/* ========================================================================= */}
+        {activeTab === 'pricing' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Banner Section */}
+            <section className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+              <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                Chapter 7 Analysis
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-4 tracking-tight">Product Pricing Methodologies</h2>
+              <p className="text-sm text-slate-600 mt-2 leading-relaxed font-sans">
+                Evaluating the balance between internally focused cost markups and external market-led forces. Learn to configure Full Cost-Plus, Marginal Cost-Plus, and ROI Pricing floors.
+              </p>
+            </section>
+
+            {/* Pricing Section Navigation */}
+            <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-3">
+              {[
+                { id: 'theory-costplus', label: 'Cost-Plus Pro Formas & Simulator' },
+                { id: 'theory-opt', label: 'Profit Maximizer (MR = MC) Solver' },
+                { id: 'theory-policies', label: 'Market Pricing Policies & PED' }
+              ].map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => setPricingSubTab(sub.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    pricingSubTab === sub.id
+                      ? 'bg-indigo-50 text-indigo-600 border border-indigo-200/50'
+                      : 'text-slate-50 hover:text-slate-900 hover:bg-slate-200/40'
+                  }`}
+                >
+                  {sub.label}
+                </button>
+              ))}
+            </div>
+
+            {/* 1. Cost-Plus Theories & Simulator */}
+            {pricingSubTab === 'theory-costplus' && (
+              <div className="space-y-6 animate-fadeIn">
+                {/* Pro Forma Showcase */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-1.5">
+                    <FileText className="w-4 h-4 text-indigo-500" /> Syllabus Pricing Pro Formas
+                  </h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                    {/* Full Cost Plus Pro Forma */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 mb-2 uppercase tracking-wide">Full Cost-Plus Pro Forma</span>
+                      <table className="w-full text-left font-mono text-[11px]">
+                        <tbody>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Direct Production Costs (Material & Labor)</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Variable Production Overhead</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Fixed Production Overhead (Absorbed)</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Variable Non-Production Overhead</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Fixed Non-Production Overhead (Absorbed)</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-300 font-bold text-slate-900 bg-indigo-50/30">
+                            <td className="py-1 font-sans">Full Absorbed Unit Cost</td>
+                            <td className="text-right">Full Cost</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Add: Markup Percentage (%)</td>
+                            <td className="text-right">Cost * Markup%</td>
+                          </tr>
+                          <tr className="font-bold text-indigo-700 bg-indigo-50/80">
+                            <td className="py-1 font-sans">Selling Price per Unit</td>
+                            <td className="text-right">Selling Price</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Marginal Pro Forma */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 mb-2 uppercase tracking-wide">Marginal Cost-Plus Pro Forma</span>
+                      <table className="w-full text-left font-mono text-[11px]">
+                        <tbody>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Direct Production Costs (Material & Labor)</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Variable Production Overhead</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Variable Non-Production Overhead</td>
+                            <td className="text-right">X</td>
+                          </tr>
+                          <tr className="border-b border-slate-300 font-bold text-slate-900 bg-emerald-50/30">
+                            <td className="py-1 font-sans">Total Marginal (Variable) Unit Cost</td>
+                            <td className="text-right">Var Cost</td>
+                          </tr>
+                          <tr className="border-b border-slate-200/60">
+                            <td className="py-1 font-sans">Add: Higher Markup Percentage (%)</td>
+                            <td className="text-right">Var Cost * Markup%</td>
+                          </tr>
+                          <tr className="font-bold text-emerald-700 bg-emerald-50/80">
+                            <td className="py-1 font-sans">Selling Price per Unit</td>
+                            <td className="text-right">Selling Price</td>
+                          </tr>
+                          <tr>
+                            <td colSpan="2" className="pt-2 text-[10px] text-slate-400 font-sans italic leading-normal">
+                              Note: Marginal pricing uses a much higher markup rate to ensure fixed costs are comfortably covered by the unit contributions.
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mathematical Formulas */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
+                  <h3 className="text-sm font-bold text-slate-900">Step-by-Step Mathematical Formulas</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-xs text-indigo-700 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Full Cost-Plus</span>
+                      {"Selling Price = Full Cost per unit * (1 + Markup %)"}
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Marginal Cost-Plus</span>
+                      {"Selling Price = Variable Cost per unit * (1 + Markup %)"}
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">ROI Target Pricing</span>
+                      {"Price = Full Cost + ((Target ROI % * Capital Employed) / Budget Units)"}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Simulator */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Controls */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Active Simulator Sliders</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Direct Materials Cost</span>
+                          <span className="font-mono text-slate-900 font-bold">${directMaterials.toFixed(2)}</span>
+                        </div>
+                        <input type="range" min="5" max="30" value={directMaterials} onChange={(e) => setDirectMaterials(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Direct Labor Cost</span>
+                          <span className="font-mono text-slate-900 font-bold">${directLabor.toFixed(2)}</span>
+                        </div>
+                        <input type="range" min="10" max="50" step="0.5" value={directLabor} onChange={(e) => setDirectLabor(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Fixed Production Overheads Pool</span>
+                          <span className="font-mono text-slate-900 font-bold">${fixedProdOverhead.toLocaleString()}</span>
+                        </div>
+                        <input type="range" min="50000" max="250000" step="5000" value={fixedProdOverhead} onChange={(e) => setFixedProdOverhead(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Budgeted Output Volume</span>
+                          <span className="font-mono text-slate-900 font-bold">{budgetSalesUnits.toLocaleString()} units</span>
+                        </div>
+                        <input type="range" min="5000" max="25000" step="500" value={budgetSalesUnits} onChange={(e) => setBudgetSalesUnits(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+
+                      <div className="pt-2 border-t border-slate-100">
+                        <div className="flex justify-between mb-1 text-violet-600 font-semibold">
+                          <span>Capital Employed</span>
+                          <span className="font-mono">${(nonCurrentAssets + workingCapital).toLocaleString()}</span>
+                        </div>
+                        <input type="range" min="200000" max="1000000" step="20000" value={nonCurrentAssets} onChange={(e) => setNonCurrentAssets(Number(e.target.value))} className="w-full accent-violet-600" />
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Target ROI %</span>
+                          <span className="font-mono text-slate-900 font-bold">{targetRoi}%</span>
+                        </div>
+                        <input type="range" min="5" max="30" value={targetRoi} onChange={(e) => setTargetRoi(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calculations Display Cards */}
+                  <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white border border-slate-200 p-5 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-sm">
+                      <div className="absolute top-0 left-0 h-1 w-full bg-blue-500" />
+                      <div className="space-y-1">
+                        <span className="text-[10px] text-blue-500 font-extrabold uppercase tracking-wider block">Full Cost-Plus</span>
+                        <p className="text-slate-500 text-xs font-sans">Based on unit full absorbed cost floor.</p>
+                      </div>
+                      <div className="mt-6">
+                        <span className="text-xs text-slate-400 block font-mono">Cost Floor: ${pricingCalculations.unitFullCost.toFixed(2)}</span>
+                        <span className="text-2xl font-black text-slate-900 block mt-1">${pricingCalculations.fullCostSellingPrice.toFixed(2)}</span>
+                        <span className="text-[10px] text-slate-400 block mt-1">With {absorptionMarkup}% standard markup</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-slate-200 p-5 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-sm">
+                      <div className="absolute top-0 left-0 h-1 w-full bg-emerald-500" />
+                      <div className="space-y-1">
+                        <span className="text-[10px] text-emerald-400 font-extrabold uppercase tracking-wider block">Marginal Cost-Plus</span>
+                        <p className="text-slate-500 text-xs font-sans">Based strictly on marginal variable rates.</p>
+                      </div>
+                      <div className="mt-6">
+                        <span className="text-xs text-slate-400 block font-mono">Var Cost: ${pricingCalculations.unitVarCost.toFixed(2)}</span>
+                        <span className="text-2xl font-black text-emerald-600 block mt-1">${pricingCalculations.varCostSellingPrice.toFixed(2)}</span>
+                        <span className="text-[10px] text-slate-400 block mt-1 font-sans font-bold">With {marginalMarkup}% marginal markup</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-white border border-slate-200 p-5 rounded-2xl relative overflow-hidden flex flex-col justify-between shadow-sm">
+                      <div className="absolute top-0 left-0 h-1 w-full bg-violet-500" />
+                      <div className="space-y-1">
+                        <span className="text-[10px] text-violet-400 font-extrabold uppercase tracking-wider block">Target ROI Pricing</span>
+                        <p className="text-slate-500 text-xs font-sans">Links price to corporate balance sheet utilization.</p>
+                      </div>
+                      <div className="mt-6">
+                        <span className="text-xs text-slate-400 block font-mono">Required Profit/Unit: ${pricingCalculations.requiredProfitPerUnit.toFixed(2)}</span>
+                        <span className="text-2xl font-black text-violet-600 block mt-1">${pricingCalculations.roiSellingPrice.toFixed(2)}</span>
+                        <span className="text-[10px] text-slate-400 block mt-1 font-sans">Hurdle return rate: {targetRoi}%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. Profit Maximizer (MR = MC) Solver */}
+            {pricingSubTab === 'theory-opt' && (
+              <div className="space-y-6 animate-fadeIn">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations
+                  </h3>
+                  <div className="space-y-2 text-slate-600 leading-relaxed font-sans">
+                    <p>
+                      <strong>The Economist's Model:</strong> Unlike accountants who assume variable costs and selling prices remain constant, economists assume demand is price-elastic. Dropping the price boosts sales volumes but reduces the margins on every unit sold.
+                    </p>
+                    <p>
+                      The <strong>Profit-Maximizing Volume</strong> is mathematically located at the precise intercept coordinate where <strong>Marginal Revenue equals Marginal Cost ($MR = MC$)</strong>.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Mathematical Formulas */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
+                  <h3 className="text-sm font-bold text-slate-900">Mathematical Formulas</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs text-indigo-700 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Linear Demand Curve Function</span>
+                      {"P = a - bQ"}
+                      <span className="text-[10px] text-slate-500 block mt-1 font-sans">Where a = price when Q = 0, and b = change in price / change in quantity.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Marginal Revenue Formula</span>
+                      {"MR = a - 2bQ"}
+                      <span className="text-[10px] text-slate-500 block mt-1 font-sans">Derived using calculus by doubling the slope coefficient.</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulator */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Controls */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Active Simulator Controls</h4>
+                    <div className="space-y-4">
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase block">Benchmark Point 1</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans">Price 1 ($)</label>
+                            <input type="number" value={econP1} onChange={(e) => setEconP1(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans">Quantity 1</label>
+                            <input type="number" value={econQ1} onChange={(e) => setEconQ1(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase block">Benchmark Point 2</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans">Price 2 ($)</label>
+                            <input type="number" value={econP2} onChange={(e) => setEconP2(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans">Quantity 2</label>
+                            <input type="number" value={econQ2} onChange={(e) => setEconQ2(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between text-xs text-slate-500 mb-1">
+                          <span>Incremental Cost ($MC$)</span>
+                          <span className="font-mono text-slate-900 font-bold">${economistMC}</span>
+                        </div>
+                        <input type="range" min="10" max="60" value={economistMC} onChange={(e) => setEconomistMC(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Outputs */}
+                  <div className="lg:col-span-2">
+                    {economistSolutions ? (
+                      <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl space-y-6 text-xs">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <span className="text-[10px] text-slate-400 block uppercase font-bold">Demand Intercept values</span>
+                            <span className="font-mono text-indigo-600 block font-bold text-sm">P = a - bQ</span>
+                            <p className="text-slate-500 font-mono">Slope coefficient (b) = {economistSolutions.b}</p>
+                            <p className="text-slate-500 font-mono">Theoretical Max constant (a) = ${economistSolutions.a}</p>
+                          </div>
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <span className="text-[10px] text-slate-400 block uppercase font-bold font-sans">Marginal Revenue Intercept</span>
+                            <span className="font-mono text-indigo-600 block font-bold text-sm font-sans">MR = a - 2bQ</span>
+                            <p className="text-slate-500 font-mono">Double slope coefficient (2b) = {(parseFloat(economistSolutions.b) * 2).toFixed(5)}</p>
+                          </div>
+                        </div>
+
+                        <div className="bg-indigo-50 border border-indigo-100 p-5 rounded-xl text-center space-y-3">
+                          <span className="text-[10px] text-indigo-600 block uppercase tracking-widest font-black">Profit-Maximizing Intersection Coordinate</span>
+                          <div className="text-4xl font-black text-indigo-600">${economistSolutions.pOpt}</div>
+                          <p className="text-slate-600">
+                            Setting the selling price to this optimum rate generates a market demand of <strong>{economistSolutions.qOpt.toLocaleString()} units</strong>.
+                          </p>
+                          <div className="border-t border-indigo-100 pt-3 flex justify-between font-mono max-w-xs mx-auto text-xs text-slate-500">
+                            <span>Peak Cumulative Contribution:</span>
+                            <span className="text-emerald-600 font-bold">${parseFloat(economistSolutions.maxProfitContribution).toLocaleString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="bg-white border border-slate-200 p-10 rounded-2xl text-center text-slate-400 text-xs shadow-sm">
+                        Please specify differing point parameters to compute intercepts.
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Strategic Market Policies */}
+            {pricingSubTab === 'theory-policies' && (
+              <div className="space-y-6 animate-fadeIn font-sans">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm">Market Skimming</span>
+                      <p className="text-slate-600 leading-relaxed pt-1">
+                        Often used at launch. Set a very high price initially to "skim the cream" off the top of the market (capturing inelastic early adopters). Price is dropped in later stages to access other segments.
+                      </p>
+                      <strong className="text-indigo-600 block mt-2">Required Conditions:</strong>
+                      <ul className="list-disc list-inside text-slate-500 space-y-1">
+                        <li>Breakthrough innovative product with zero initial competition.</li>
+                        <li>High prestige or status attached to ownership.</li>
+                        <li>Short lifecycle, requiring rapid cost recovery.</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm">Market Penetration</span>
+                      <p className="text-slate-600 leading-relaxed pt-1">
+                        The polar opposite of skimming. Set an extremely low initial price to attract massive volumes of clients rapidly and seize market dominance.
+                      </p>
+                      <strong className="text-indigo-600 block mt-2">Required Conditions:</strong>
+                      <ul className="list-disc list-inside text-slate-500 space-y-1">
+                        <li>Highly price-sensitive (elastic) customer demographics.</li>
+                        <li>Substantial economies of scale exist to drive down production cost floors.</li>
+                        <li>Ability to act as an effective barrier to competitors.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Pricing Policies */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                  <div className="bg-white border border-slate-200 p-4 rounded-xl space-y-1.5 shadow-sm">
+                    <span className="font-black text-slate-900 uppercase tracking-wide block">Complementary Pricing</span>
+                    <p className="text-slate-500 leading-relaxed">
+                      Pricing linked products in coordination. Typically selling a primary asset at cost, and consumables at high margins.
+                    </p>
+                  </div>
+                  <div className="bg-white border border-slate-200 p-4 rounded-xl space-y-1.5 shadow-sm">
+                    <span className="font-black text-slate-900 uppercase tracking-wide block">Price Discrimination</span>
+                    <p className="text-slate-500 leading-relaxed">
+                      Charging differing price thresholds to separate customer pockets. Requires solid barriers to block arbitrage.
+                    </p>
+                  </div>
+                  <div className="bg-white border border-slate-200 p-4 rounded-xl space-y-1.5 shadow-sm">
+                    <span className="font-black text-slate-900 uppercase tracking-wide block">Loss Leaders</span>
+                    <p className="text-slate-500 leading-relaxed">
+                      Dumping a single popular product at an explicit loss specifically to lure foot traffic who buy other goods.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* CHAPTER 8: RISK AND UNCERTAINTY                                           */}
+        {/* ========================================================================= */}
+        {activeTab === 'risk' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Banner Section */}
+            <section className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+              <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                Chapter 8 Analysis
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-4 tracking-tight">Risk & Uncertainty Evaluation</h2>
+              <p className="text-sm text-slate-600 mt-2 leading-relaxed">
+                Explore decision-making frameworks under incomplete information. Adjust payoff matrices to evaluate risk seekers (Maximax), risk-averse managers (Maximin, Regret), expected values, and decision tree logic.
+              </p>
+            </section>
+
+            {/* Sub-tab Navigation */}
+            <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-3">
+              {[
+                { id: 'theory-risk', label: '1. Payoff Decisions (Maximax, Maximin, Regret)' },
+                { id: 'theory-ev', label: '2. Expected Values (EV) & Interactive Decision Tree' },
+                { id: 'theory-sens', label: '3. Sensitivity Analysis Sandbox' }
+              ].map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => setRiskSubTab(sub.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    riskSubTab === sub.id
+                      ? 'bg-indigo-50 text-indigo-600 border border-indigo-200/50'
+                      : 'text-slate-50 hover:text-slate-900 hover:bg-slate-200/40'
+                  }`}
+                >
+                  {sub.label}
+                </button>
+              ))}
+            </div>
+
+            {/* 1. Payoff Decisions */}
+            {riskSubTab === 'theory-risk' && (
+              <div className="space-y-6 animate-fadeIn">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2 font-sans">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm font-sans">Maximax</span>
+                      <p className="text-slate-600 leading-relaxed pt-1">
+                        Select the alternative with the maximum possible payoff (highest return under best-case scenarios). The <strong>risk-seeker's / optimist's</strong> decision rule.
+                      </p>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm font-sans">Maximin</span>
+                      <p className="text-slate-600 leading-relaxed pt-1">
+                        Select the alternative with the highest return under the worst-case scenario. The <strong>risk-averse / pessimist's</strong> decision rule.
+                      </p>
+                    </div>
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm font-sans">Minimax Regret</span>
+                      <p className="text-slate-600 leading-relaxed pt-1">
+                        Minimizes the maximum potential "regret" (opportunity loss from making a sub-optimal choice). Suited for managers who fear missing out.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mathematical Formulas */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
+                  <h3 className="text-sm font-bold text-slate-900">Mathematical Formulas</h3>
+                  <div className="grid grid-cols-1 gap-4 font-mono text-xs text-indigo-700 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Opportunity Loss (Regret)</span>
+                      {"Regret for Decision X in State N = Best Possible Payoff in State N - Actual Payoff of Decision X"}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Interactive Simulator */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Inputs */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">ICE CREAM SELLER MATRIX</h4>
+                    <div className="space-y-4">
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="font-bold text-indigo-600 block text-[11px]">Small Daily Order</span>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Cold</label>
+                            <input type="number" value={payoffSmallCold} onChange={(e) => setPayoffSmallCold(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Warm</label>
+                            <input type="number" value={payoffSmallWarm} onChange={(e) => setPayoffSmallWarm(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Hot</label>
+                            <input type="number" value={payoffSmallHot} onChange={(e) => setPayoffSmallHot(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="font-bold text-indigo-600 block text-[11px]">Medium Daily Order</span>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Cold</label>
+                            <input type="number" value={payoffMedCold} onChange={(e) => setPayoffMedCold(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Warm</label>
+                            <input type="number" value={payoffMedWarm} onChange={(e) => setPayoffMedWarm(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Hot</label>
+                            <input type="number" value={payoffMedHot} onChange={(e) => setPayoffMedHot(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="font-bold text-indigo-600 block text-[11px]">Large Daily Order</span>
+                        <div className="grid grid-cols-3 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Cold</label>
+                            <input type="number" value={payoffLargeCold} onChange={(e) => setPayoffLargeCold(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Warm</label>
+                            <input type="number" value={payoffLargeWarm} onChange={(e) => setPayoffLargeWarm(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase font-sans font-sans">Hot</label>
+                            <input type="number" value={payoffLargeHot} onChange={(e) => setPayoffLargeHot(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Outputs */}
+                  <div className="lg:col-span-2 space-y-6">
+                    {/* Live Regrets table */}
+                    <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-xs">
+                      <span className="bg-rose-50 text-rose-600 border border-rose-200 px-2.5 py-0.5 rounded text-[10px] font-bold block w-fit mb-3">Live Opportunity Loss Matrix</span>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left font-mono">
+                          <thead>
+                            <tr className="border-b border-slate-100 text-slate-400 font-bold font-sans">
+                              <th className="pb-2">Daily Order Size</th>
+                              <th className="pb-2">Cold Regret</th>
+                              <th className="pb-2">Warm Regret</th>
+                              <th className="pb-2">Hot Regret</th>
+                              <th className="pb-2 text-rose-600">Maximum Regret</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            <tr>
+                              <td className="py-2.5 font-bold text-slate-900 font-sans">Small Order</td>
+                              <td>{riskDecisions.regret.Small.cold}</td>
+                              <td>{riskDecisions.regret.Small.warm}</td>
+                              <td>{riskDecisions.regret.Small.hot}</td>
+                              <td className="text-rose-600 font-bold">{riskDecisions.maxRegrets.Small}</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2.5 font-bold text-slate-900 font-sans">Medium Order</td>
+                              <td>{riskDecisions.regret.Medium.cold}</td>
+                              <td>{riskDecisions.regret.Medium.warm}</td>
+                              <td>{riskDecisions.regret.Medium.hot}</td>
+                              <td className="text-rose-600 font-bold">{riskDecisions.maxRegrets.Medium}</td>
+                            </tr>
+                            <tr>
+                              <td className="py-2.5 font-bold text-slate-900 font-sans">Large Order</td>
+                              <td>{riskDecisions.regret.Large.cold}</td>
+                              <td>{riskDecisions.regret.Large.warm}</td>
+                              <td>{riskDecisions.regret.Large.hot}</td>
+                              <td className="text-rose-600 font-bold">{riskDecisions.maxRegrets.Large}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* Evaluated outputs */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-sans">
+                      <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col justify-between shadow-sm relative overflow-hidden shadow-lg">
+                        <div className="absolute top-0 left-0 h-1 w-full bg-indigo-500" />
+                        <div>
+                          <span className="font-extrabold text-slate-900">Maximax Decision</span>
+                          <p className="text-slate-500 mt-1">Select the largest peak return.</p>
+                        </div>
+                        <div className="mt-4 pt-2 border-t border-slate-100 font-bold font-sans">
+                          Selected: {riskDecisions.maximaxDecision} Order
+                          <span className="block text-indigo-600 text-[10px] mt-0.5 font-mono">Yields up to: ${riskDecisions.maxPayoffs[riskDecisions.maximaxDecision]}</span>
+                        </div>
+                      </div>
+
+                      <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col justify-between shadow-sm relative overflow-hidden shadow-lg">
+                        <div className="absolute top-0 left-0 h-1 w-full bg-emerald-500" />
+                        <div>
+                          <span className="font-extrabold text-slate-900">Maximin Decision</span>
+                          <p className="text-slate-500 mt-1">Best of the worst-case floors.</p>
+                        </div>
+                        <div className="mt-4 pt-2 border-t border-slate-100 font-bold font-sans">
+                          Selected: {riskDecisions.maximinDecision} Order
+                          <span className="block text-emerald-600 text-[10px] mt-0.5 font-mono">Guarantees: ${riskDecisions.minPayoffs[riskDecisions.maximinDecision]}</span>
+                        </div>
+                      </div>
+
+                      <div className="bg-white border border-slate-200 p-4 rounded-xl flex flex-col justify-between shadow-sm relative overflow-hidden shadow-lg">
+                        <div className="absolute top-0 left-0 h-1 w-full bg-rose-500" />
+                        <div>
+                          <span className="font-extrabold text-slate-900">Minimax Regret</span>
+                          <p className="text-slate-500 mt-1">Minimizes maximum possible regret.</p>
+                        </div>
+                        <div className="mt-4 pt-2 border-t border-slate-100 font-bold font-sans">
+                          Selected: {riskDecisions.minimaxRegretDecision} Order
+                          <span className="block text-rose-600 text-[10px] mt-0.5 font-mono">Limits maximum regret to: ${riskDecisions.maxRegrets[riskDecisions.minimaxRegretDecision]}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. Expected Value & Interactive Decision Tree */}
+            {riskSubTab === 'theory-ev' && (
+              <div className="space-y-6 animate-fadeIn font-sans">
+                {/* Theory block */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 leading-relaxed">
+                    <div>
+                      <strong className="text-slate-900 block text-xs uppercase mb-1">Expected Value (EV)</strong>
+                      <p className="text-slate-600 font-sans font-sans">
+                        Weighted average of all possible outcomes. It represents long-run repetition runs rather than a single choice, which means those who use EVs are described as **risk neutral**.
+                      </p>
+                      <code className="block bg-slate-50 p-2 rounded border border-slate-200 font-mono text-[11px] text-indigo-700 mt-2 font-mono">
+                        {"EV = Sum of (Payoff x Probability)"}
+                      </code>
+                    </div>
+                    <div>
+                      <strong className="text-slate-900 block text-xs uppercase mb-1">Decision Trees</strong>
+                      <p className="text-slate-600">
+                        A visual diagram that represents choices and chance events chronologically. 
+                        <strong> Decision Nodes (Squares):</strong> represent alternative pathways where the manager has direct control. 
+                        <strong> Chance Nodes (Circles):</strong> represent uncertain occurrences. We evaluate trees from right-to-left using **roll-back technique**.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Live Decision Tree Simulator */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Controls */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl space-y-4 text-xs font-sans">
+                    <h4 className="text-xs font-bold text-slate-950 uppercase tracking-wider border-b border-slate-100 pb-2 flex items-center gap-1 font-sans">
+                      <SlidersHorizontal className="w-4 h-4 text-indigo-500" /> Tree Parameters
+                    </h4>
+                    <div className="space-y-4 font-sans">
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Market Success Probability</span>
+                          <span className="font-mono text-slate-950 font-bold">{dtProbSuccess}%</span>
+                        </div>
+                        <input type="range" min="10" max="90" value={dtProbSuccess} onChange={(e) => setDtProbSuccess(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+
+                      <div className="bg-slate-55 p-3 rounded-lg border border-slate-200 space-y-2 font-sans">
+                        <span className="font-bold text-slate-700 block uppercase">Product A Returns ($)</span>
+                        <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div>
+                            <label className="text-slate-400 block uppercase font-sans">Success</label>
+                            <input type="number" value={dtA_success} onChange={(e) => setDtA_success(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded text-slate-900" />
+                          </div>
+                          <div>
+                            <label className="text-slate-400 block uppercase font-sans font-sans">Failure</label>
+                            <input type="number" value={dtA_failure} onChange={(e) => setDtA_failure(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded text-slate-900" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-55 p-3 rounded-lg border border-slate-200 space-y-2 font-sans">
+                        <span className="font-bold text-slate-700 block uppercase">Product B Returns ($)</span>
+                        <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div>
+                            <label className="text-slate-400 block uppercase font-sans">Success</label>
+                            <input type="number" value={dtB_success} onChange={(e) => setDtB_success(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded text-slate-900" />
+                          </div>
+                          <div>
+                            <label className="text-slate-400 block uppercase font-sans">Failure</label>
+                            <input type="number" value={dtB_failure} onChange={(e) => setDtB_failure(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded text-slate-900" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Decision Tree Visual Workspace */}
+                  <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-6 font-sans">
+                    <span className="bg-indigo-50 text-indigo-600 border border-indigo-150 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider block w-fit font-sans">Interactive Decision Tree Workspace</span>
+                    
+                    {/* Visual tree nodes mock-up mapping calculated state */}
+                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 space-y-6 text-xs font-sans">
+                      
+                      {/* DECISION NODE */}
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-indigo-600 text-white rounded font-extrabold flex items-center justify-center shadow">1</div>
+                        <div className="p-2.5 bg-white border border-slate-200 rounded-lg shadow-sm font-sans">
+                          <strong>Strategic Choice:</strong> Invest in Product A vs. Product B
+                        </div>
+                      </div>
+
+                      <div className="pl-12 space-y-4 relative border-l border-slate-200 ml-4 font-sans">
+                        {/* BRANCH A */}
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-3">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase">Path A</span>
+                            <div className="w-6 h-6 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold font-mono">A</div>
+                            <span className="font-bold">Invest Product A</span>
+                          </div>
+                          <div className="pl-9 space-y-1.5 font-sans">
+                            <div className="flex justify-between border-b border-slate-200/40 pb-1 max-w-sm text-[11px] font-mono">
+                              <span>Success ({(dtProbSuccess)}%):</span>
+                              <span className="font-bold">${dtA_success.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between border-b border-slate-200/40 pb-1 max-w-sm text-[11px] font-mono">
+                              <span>Failure ({(100-dtProbSuccess)}%):</span>
+                              <span className="font-bold">${dtA_failure.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between font-bold text-indigo-600 text-[11px] font-mono max-w-sm">
+                              <span>Expected Value (EV A):</span>
+                              <span>${decisionTreeCalculations.evProductA.toLocaleString()}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* BRANCH B */}
+                        <div className="space-y-2 pt-2 border-t border-slate-200/60 font-sans">
+                          <div className="flex items-center gap-3">
+                            <span className="text-[10px] font-bold text-slate-400 uppercase font-sans">Path B</span>
+                            <div className="w-6 h-6 rounded-full bg-slate-300 text-slate-700 flex items-center justify-center font-bold font-mono font-sans">B</div>
+                            <span className="font-bold">Invest Product B</span>
+                          </div>
+                          <div className="pl-9 space-y-1.5 font-sans">
+                            <div className="flex justify-between border-b border-slate-200/40 pb-1 max-w-sm text-[11px] font-mono">
+                              <span>Success ({(dtProbSuccess)}%):</span>
+                              <span className="font-bold">${dtB_success.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between border-b border-slate-200/40 pb-1 max-w-sm text-[11px] font-mono">
+                              <span>Failure ({(100-dtProbSuccess)}%):</span>
+                              <span className="font-bold">${dtB_failure.toLocaleString()}</span>
+                            </div>
+                            <div className="flex justify-between font-bold text-indigo-600 text-[11px] font-mono max-w-sm">
+                              <span>Expected Value (EV B):</span>
+                              <span>${decisionTreeCalculations.evProductB.toLocaleString()}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-xl text-center">
+                      <span className="text-[10px] text-indigo-600 font-extrabold uppercase block tracking-wide">Optimal Rolled-Back Choice</span>
+                      <p className="text-sm font-sans mt-1">
+                        Select <strong>{decisionTreeCalculations.optimalChoice}</strong> as it yields the peak Expected Value of <strong>${decisionTreeCalculations.optimalEV.toLocaleString()}</strong>.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Sensitivity Analysis Playground */}
+            {riskSubTab === 'theory-sens' && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fadeIn text-xs">
+                {/* Inputs */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl space-y-4 font-sans">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Sensitivity Targets</h4>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Projected Sales Revenue</span>
+                        <span className="font-mono text-slate-900 font-bold">${sensitiveRevenue.toLocaleString()}</span>
+                      </div>
+                      <input type="range" min="40000" max="150000" step="5000" value={sensitiveRevenue} onChange={(e) => setSensitiveRevenue(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Variable Costs</span>
+                        <span className="font-mono text-slate-900 font-bold">${sensitiveVarCost.toLocaleString()}</span>
+                      </div>
+                      <input type="range" min="30000" max="90000" step="5000" value={sensitiveVarCost} onChange={(e) => setSensitiveVarCost(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Fixed Costs</span>
+                        <span className="font-mono text-slate-900 font-bold">${sensitiveFixedCost.toLocaleString()}</span>
+                      </div>
+                      <input type="range" min="10000" max="50000" step="2000" value={sensitiveFixedCost} onChange={(e) => setSensitiveFixedCost(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Outputs */}
+                <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <span className="text-[10px] text-indigo-600 font-extrabold uppercase block tracking-wider font-sans">Sensitivity Playground</span>
+                    <h3 className="text-xl font-bold text-slate-900 font-sans">Project Financial Cushion Analysis</h3>
+                    
+                    {/* FORMULA HIGHLIGHT */}
+                    <div className="bg-indigo-50 border border-indigo-100 p-4 rounded-xl space-y-1">
+                      <span className="text-[10px] text-indigo-700 font-bold uppercase tracking-wider block font-sans">Syllabus Sensitivity Formula</span>
+                      <code className="text-xs font-mono font-bold text-indigo-900 block bg-white p-2.5 rounded border border-indigo-100 font-mono">
+                        {"Sensitivity % = (Project Net Profit / Total Aggregated Value of Variable) * 100%"}
+                      </code>
+                      <p className="text-[11px] text-slate-600 mt-1 leading-normal font-sans">
+                        The <strong>smaller</strong> the resulting sensitivity percentage, the <strong>riskier</strong> and more sensitive the decision is to that variable, representing a very thin safety margin before profit falls to exactly $0.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider font-sans">Revenue Sensitivity</span>
+                        <span className="text-2xl font-black text-slate-900 block mt-1">{sensitivityAnalysis.revSensitivity}%</span>
+                        <span className="text-[10px] text-slate-400 font-sans block mt-1 font-sans">Drop allowance before losses</span>
+                      </div>
+                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider font-sans font-sans">Variable Cost Sensitivity</span>
+                        <span className="text-2xl font-black text-slate-900 block mt-1">{sensitivityAnalysis.varSensitivity}%</span>
+                        <span className="text-[10px] text-slate-400 font-sans block mt-1 font-sans">Increase limit before losses</span>
+                      </div>
+                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                        <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider font-sans font-sans">Fixed Cost Sensitivity</span>
+                        <span className="text-2xl font-black text-slate-900 block mt-1">{sensitivityAnalysis.fixedSensitivity}%</span>
+                        <span className="text-[10px] text-slate-400 font-sans block mt-1 font-sans">Increase limit before losses</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* CHAPTER 9: BUDGETARY SYSTEMS                                              */}
+        {/* ========================================================================= */}
+        {activeTab === 'budget' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Banner Section */}
+            <section className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+              <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                Chapter 9 Budgeting
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-4 tracking-tight">Budgetary Systems & Behavioral Slack</h2>
+              <p className="text-sm text-slate-600 mt-2 leading-relaxed font-sans font-sans">
+                Explore the purposes of budgets (PRIME-C), the continuum of setting targets (Top-down vs. Bottom-up), modern budgetary frameworks (Incremental, ZBB, Rolling), and the behavioral trap of Budgetary Slack.
+              </p>
+            </section>
+
+            {/* Sub-tab Navigation */}
+            <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-3 font-sans">
+              {[
+                { id: 'theory-purposes', label: '1. Purposes & Performance Hierarchy' },
+                { id: 'theory-frameworks', label: '2. Budget Systems Comparison' },
+                { id: 'theory-behavioral', label: '3. Sourcing, Change & Behavioral Dynamics' },
+                { id: 'theory-ethics', label: '4. Ethical & Sustainability Considerations' },
+                { id: 'proformas-functional', label: '5. Functional Budget Chain Pro Formas' },
+                { id: 'flexing-simulation', label: '6. Flexible vs. Flexed Budgets' }
+              ].map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => setBudgetSubTab(sub.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    budgetSubTab === sub.id
+                      ? 'bg-indigo-50 text-indigo-600 border border-indigo-200/50'
+                      : 'text-slate-50 hover:text-slate-900 hover:bg-slate-200/40'
+                  }`}
+                >
+                  {sub.label}
+                </button>
+              ))}
+            </div>
+
+            {/* 1. Purposes & Performance Hierarchy */}
+            {budgetSubTab === 'theory-purposes' && (
+              <div className="space-y-6 animate-fadeIn text-xs">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 font-sans">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations & Performance Hierarchy
+                  </h3>
+                  
+                  {/* Performance Hierarchy */}
+                  <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-xl space-y-3 font-sans">
+                    <h4 className="font-extrabold text-indigo-900 text-sm flex items-center gap-1.5">
+                      <Layers className="w-4 h-4" /> The Performance Hierarchy
+                    </h4>
+                    <p className="text-slate-700 leading-relaxed">
+                      Performance management requires translating top-level abstract aspirations into daily operational realities:
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <strong>1. Mission & Long-Term Planning</strong>
+                        <p className="text-slate-500 text-[11px] leading-relaxed font-sans">Isolates core corporate purpose (Mission) and forecasts overall resource capacities and market trends over a 5 to 15-year Strategic timeframe.</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <strong>2. Corporate & Unit Objectives</strong>
+                        <p className="text-slate-500 text-[11px] leading-relaxed font-sans">Establishes quantifiable targets for the whole firm (Corporate Objectives) and cascades them down to divisional targets (Unit Objectives).</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <strong>3. Setting Strategies & Budgeting</strong>
+                        <p className="text-slate-500 text-[11px] leading-relaxed font-sans">Formulates long-term operational plans (Strategies) and deploys short-term budgets to allocate resources and authorize divisional spending limits.</p>
+                      </div>
+                      <div className="bg-white p-3 rounded-lg border border-slate-200 space-y-1">
+                        <strong>4. Master vs. Functional Budgets</strong>
+                        <p className="text-slate-500 text-[11px] leading-relaxed font-sans">Functional budgets are the individual targets of separate operations (e.g. Sales, Production, Labor). The Master budget integrates these into budgeted Income Statements and Balance Sheets.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs font-sans">
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm">Purposes of Budgets (PRIME-C)</span>
+                      <ul className="list-decimal list-inside text-slate-600 space-y-1.5 leading-relaxed pt-2 font-sans">
+                        <li><strong>P</strong>lanning: Anticipate future market trends.</li>
+                        <li><strong>R</strong>esponsibility & Authorization: Gives operational spending limits.</li>
+                        <li><strong>I</strong>ntegration & Co-ordination: Harmonize multi-department targets.</li>
+                        <li><strong>M</strong>otivation: Goals linked to performance rewards.</li>
+                        <li><strong>E</strong>valuation of Performance: The baseline for variance reviews.</li>
+                        <li><strong>C</strong>ommunication: Informing staff of top-level targets.</li>
+                      </ul>
+                    </div>
+
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                      <span className="font-extrabold text-slate-900 block text-sm">Hopwood's Evaluation Styles</span>
+                      <p className="text-slate-600 leading-relaxed pt-2 font-sans">
+                        How managers are evaluated based on their budgets alters stress and behavior:
+                      </p>
+                      <ul className="list-disc list-inside text-slate-500 space-y-1 mt-1 font-sans">
+                        <li><strong>Budget-Constrained:</strong> Rigid short-term financial evaluation. Causes massive stress, relationship friction, data manipulation, and high budgetary slack.</li>
+                        <li><strong>Profit-Conscious:</strong> Budgets are used flexibly as guides for long-term profit success. Lower stress, excellent peer cooperation, low data manipulation.</li>
+                        <li><strong>Non-Accounting:</strong> Budget numbers are ignored; managers are evaluated strictly on operational quality (risk of cost overruns).</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. Budget Frameworks Comparison */}
+            {budgetSubTab === 'theory-frameworks' && (
+              <div className="space-y-6 animate-fadeIn text-xs font-sans">
+                {/* Master Budgeting Systems Navigation Matrix */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 font-sans">Comprehensive Budgetary Systems Comparison</h3>
+                  <p className="text-slate-500 leading-relaxed font-sans mb-4">
+                    Analyze the full curriculum spectrum of modern budgeting styles, behaviors, and control mechanisms:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-sans">
+                    {/* Top-down vs Bottom-up */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide">Top-Down vs. Bottom-Up Budgeting</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        <strong>Top-Down (Imposed):</strong> Management sets targets. <em>Pros:</em> Fast, no slack, coordinates central strategy. <em>Cons:</em> Low motivation, misses local floor constraints. 
+                        <br /><strong>Optimal Use:</strong> Small entities with absolute centralized command, or during crises requiring instant financial turnarounds.
+                      </p>
+                      <p className="text-slate-600 leading-relaxed">
+                        <strong>Bottom-Up (Participative):</strong> Managers propose targets. <em>Pros:</em> Highly motivating, high localized accuracy. <em>Cons:</em> Extremely slow to negotiate, high risk of budgetary slack.
+                        <br /><strong>Optimal Use:</strong> Large, highly decentralized or multi-divisional organizations facing diverse regional environments.
+                      </p>
+                    </div>
+
+                    {/* ZBB */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide font-sans">Zero-Based Budgeting (ZBB)</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        Every period begins from an absolute floor of $0, with all expense lines required to prove positive cost-benefit values.
+                      </p>
+                      <p className="text-slate-500 leading-relaxed">
+                        <em>Pros:</em> Eliminates redundancy and targets wasteful bureaucracy. <em>Cons:</em> Highly paperwork-intensive, expensive, causes friction. <em>Use when:</em> Public sector overhead reviews, structural reforms, or discretionary cost areas (R&D, marketing).
+                      </p>
+                    </div>
+
+                    {/* Rolling Budgets */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide">Rolling Budgets</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        Continuously updated by adding a new planning increment immediately when the current month/quarter closes out.
+                      </p>
+                      <p className="text-slate-500 leading-relaxed">
+                        <em>Pros:</em> Keeps budgets accurate in high-inflation or hyper-volatile conditions. <em>Cons:</em> High administrative burden, perpetual budget preparation. <em>Use when:</em> Highly volatile material costs or rapid economic shifts.
+                      </p>
+                    </div>
+
+                    {/* ABB */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide">Activity-Based Budgeting (ABB)</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        Uses ABC principles in reverse. Budgeted resource requirements are derived from expected activity levels and cost driver volumes.
+                      </p>
+                      <p className="text-slate-500 leading-relaxed">
+                        <em>Pros:</em> Focuses on resource efficiency and cost drivers. <em>Cons:</em> Extremely complex to configure. <em>Use when:</em> Companies already operating under Activity-Based Costing systems.
+                      </p>
+                    </div>
+
+                    {/* Incremental */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide">Incremental Budgeting</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        Uses previous actual historical outlays as a permanent baseline, adjusting merely for inflation.
+                      </p>
+                      <p className="text-slate-500 leading-relaxed">
+                        <em>Pros:</em> Simple, inexpensive, and fast. <em>Cons:</em> Inherently accepts and perpetuates past inefficiencies. <em>Use when:</em> Highly stable cost environments with low volatility.
+                      </p>
+                    </div>
+
+                    {/* Feed-forward Control */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide font-sans">Feed-forward Control</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        <strong>Feed-forward Control:</strong> Proactive system comparing forecasted future outcomes against targets to resolve gaps before they occur.
+                      </p>
+                      <p className="text-slate-500 leading-relaxed">
+                        <strong>Feedback Control:</strong> Reactive system comparing past actual performance against historical budgets to correct variances after they occur.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Sourcing, Change & Behavioral Dynamics */}
+            {budgetSubTab === 'theory-behavioral' && (
+              <div className="space-y-6 animate-fadeIn text-xs font-sans">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 font-sans">Syllabus Practical & Behavioral Dynamics Summaries</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+                    {/* Sources of Data & Difficulties of Changing Systems */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3 font-sans">
+                      <span className="font-bold text-slate-900 block uppercase tracking-wider text-[11px] border-b border-slate-200 pb-1">Sources of Data & Changing Systems</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        <strong>Sources of Data:</strong> Budgets rely on internal accounting ledgers, ERP logs, labor time studies, combined with external indicators like supplier catalogs, competitors' price lists, and inflation forecasts.
+                      </p>
+                      <div className="text-slate-600 leading-relaxed">
+                        <strong>Difficulties of Changing a Budgetary System:</strong> Transitioning systems (e.g., from Incremental to ZBB) is highly difficult due to:
+                        <div className="list-disc list-inside text-slate-500 space-y-1 mt-1 font-sans">
+                          <div>• Deep-seated staff resistance to audit-like justifications.</div>
+                          <div>• Significant training costs and time investment.</div>
+                          <div>• Major software reconfiguration or ERP alignment costs.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Uncertainty, Volatility & Beyond Budgeting */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3 font-sans">
+                      <span className="font-bold text-slate-900 block uppercase tracking-wider text-[11px] border-b border-slate-200 pb-1">Uncertainty, Volatility & Beyond Budgeting</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        <strong>Dealing with Uncertainty and Volatility:</strong> Traditional budgets break in volatile markets. We mitigate this using rolling forecasts, flexible target bounds, scenario planning, and probability ranges.
+                      </p>
+                      <p className="text-slate-600 leading-relaxed font-sans">
+                        <strong>Beyond Budgeting:</strong> Abandoning rigid annual targets entirely. Instead, companies utilize relative performance measures (comparing division results to external market benchmarks rather than internal static goals), rolling forecasts, and highly decentralized, self-managing frontline teams.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 4. Ethical & Sustainability Considerations */}
+            {budgetSubTab === 'theory-ethics' && (
+              <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs animate-fadeIn font-sans">
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 font-sans">
+                  <Shield className="w-4 h-4 text-indigo-500" /> Ethical & Sustainability Considerations in Budgeting
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <span className="font-bold text-indigo-600 block flex items-center gap-1.5"><UserCheck className="w-4 h-4" /> Ethical Sourcing & Behavior</span>
+                    <p className="text-slate-600 leading-relaxed">
+                      Budget-constrained environments often force managers into unethical shortcuts. 
+                      <strong> Target Gaming:</strong> Shifting cost lines between years or using unsafe low-grade raw materials. 
+                      <strong> Human Welfare:</strong> Cutting employee safety or training budgets to meet cost-reduction indicators.
+                    </p>
+                  </div>
+
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <span className="font-bold text-indigo-600 block flex items-center gap-1.5"><Leaf className="w-4 h-4 text-emerald-500" /> Sustainability & Environmental Integration</span>
+                    <p className="text-slate-600 leading-relaxed">
+                      Modern budgets must integrate environmental benchmarks:
+                      <strong> Carbon Caps:</strong> Direct allocation of carbon credits and compliance expenditures to functional targets.
+                      <strong> Material Flow Accounting (MFCA):</strong> Budgeting waste reduction parameters and non-product output values to support environmental preservation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 5. Functional Budget Chain Pro Formas */}
+            {budgetSubTab === 'proformas-functional' && (
+              <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs animate-fadeIn font-sans">
+                <h3 className="text-sm font-extrabold text-slate-900 flex items-center gap-1.5 font-sans">
+                  <FileText className="w-4 h-4 text-indigo-500" /> Syllabus Functional Budget Chain Pro Forma
+                </h3>
+                <p className="text-slate-600 leading-relaxed font-sans mb-3">
+                  Under the syllabus, a master budget is developed in a strict logical sequence starting from the <strong>Principal Budget Factor</strong> (usually sales demand). Here is the master cascading flow of calculations:
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-[11px]">
+                  {/* Production & Material Usage Pro Forma */}
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide font-sans font-sans">1. Production & Material Usage Budget</span>
+                    <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 leading-relaxed">
+                      <strong>Production Budget (Units) Formula:</strong>
+                      <br />{"Production = Budgeted Sales + Target Closing Stock of Finished Goods - Opening Stock of Finished Goods"}
+                    </div>
+                    <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 leading-relaxed">
+                      <strong>Material Usage Budget (kg/liters) Formula:</strong>
+                      <br />{"Raw Material Usage = Budgeted Production (Units) * Standard Raw Material per Unit (kg)"}
+                    </div>
+                  </div>
+
+                  {/* Material Purchases & Direct Labor Pro Forma */}
+                  <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+                    <span className="font-extrabold text-slate-900 block text-xs border-b border-slate-200 pb-1 uppercase tracking-wide font-sans">2. Material Purchases & Direct Labor Budget</span>
+                    <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 leading-relaxed">
+                      <strong>Material Purchases Budget (kg & $) Formula:</strong>
+                      <br />{"Purchases (kg) = Usage + Target Closing Stock of Raw Material - Opening Stock of Raw Material"}
+                      <br />{"Total Purchase Cost ($) = Purchases (kg) * Standard Purchase Price per kg"}
+                    </div>
+                    <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 leading-relaxed">
+                      <strong>Direct Labor Hours & Cost Formula:</strong>
+                      <br />{"Total Hours Required = Budgeted Production (Units) * Standard Labor Hours per Unit"}
+                      <br />{"Total Direct Labor Cost ($) = Total Hours Required * Standard Labor Rate per Hour"}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 6. Flexible vs. Flexed Budgets */}
+            {budgetSubTab === 'flexing-simulation' && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fadeIn text-xs">
+                {/* Inputs */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Flexing Controls</h4>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Original Planned Units</span>
+                        <span className="font-mono text-slate-900 font-bold">{budgetUnits.toLocaleString()}</span>
+                      </div>
+                      <input type="range" min="5000" max="15000" step="500" value={budgetUnits} onChange={(e) => setBudgetUnits(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Actual Achieved Units</span>
+                        <span className="font-mono text-slate-900 font-bold">{actualUnits.toLocaleString()}</span>
+                      </div>
+                      <input type="range" min="5000" max="20000" step="500" value={actualUnits} onChange={(e) => setActualUnits(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                    <div className="pt-2 border-t border-slate-100">
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Standard Unit Price ($)</span>
+                        <span className="font-mono text-slate-900 font-bold">${fixedUnitRevenue.toFixed(2)}</span>
+                      </div>
+                      <input type="range" min="5" max="25" step="0.5" value={fixedUnitRevenue} onChange={(e) => setFixedUnitRevenue(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1 text-slate-500">
+                        <span>Standard Variable Cost ($/unit)</span>
+                        <span className="font-mono text-slate-900 font-bold">${fixedUnitVarCost.toFixed(2)}</span>
+                      </div>
+                      <input type="range" min="1" max="15" step="0.5" value={fixedUnitVarCost} onChange={(e) => setFixedUnitVarCost(Number(e.target.value))} className="w-full accent-indigo-600" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* outputs */}
+                <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 font-sans">
+                  <span className="bg-emerald-50 text-emerald-600 border border-emerald-200 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider block w-fit">Comparative variance Benchmarking</span>
+                  <h3 className="text-xl font-bold text-slate-900 font-sans">Fixed vs. Flexed Budgets</h3>
+                  <p className="text-slate-500 leading-relaxed font-sans">
+                    Always flex variable items to actual achieved units first to prevent "apples-to-oranges" comparisons. Fixed costs remain rigid.
+                  </p>
+
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left font-mono text-xs">
+                      <thead>
+                        <tr className="border-b border-slate-200 text-slate-400 font-bold font-sans">
+                          <th className="pb-2">Line Item</th>
+                          <th className="pb-2">Fixed Budget ({budgetUnits.toLocaleString()} units)</th>
+                          <th className="pb-2 text-indigo-600">Flexed Budget ({actualUnits.toLocaleString()} units)</th>
+                          <th className="pb-2">Behavior Rule</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100">
+                        <tr>
+                          <td className="py-2.5 font-bold text-slate-900 font-sans">Sales Revenue</td>
+                          <td>${flexedBudgetResults.fixedRev.toLocaleString()}</td>
+                          <td className="text-indigo-600 font-bold">${flexedBudgetResults.flexedRev.toLocaleString()}</td>
+                          <td className="text-slate-500 font-sans font-sans">Variable: scales with volume</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2.5 font-bold text-slate-900 font-sans">Variable Cost</td>
+                          <td>${flexedBudgetResults.fixedVar.toLocaleString()}</td>
+                          <td className="text-indigo-400 font-bold">${flexedBudgetResults.flexedVar.toLocaleString()}</td>
+                          <td className="text-slate-500 font-sans font-sans">Variable: scales with volume</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2.5 font-bold text-slate-900 font-sans">Fixed Overhead</td>
+                          <td>${fixedBudgetOverhead.toLocaleString()}</td>
+                          <td className="text-indigo-600 font-bold">${fixedBudgetOverhead.toLocaleString()}</td>
+                          <td className="text-slate-500 font-sans font-sans">Fixed: remains completely flat</td>
+                        </tr>
+                        <tr className="border-t border-slate-200">
+                          <td className="py-2.5 font-extrabold text-slate-900 font-sans">Projected Profit</td>
+                          <td className="font-extrabold">${flexedBudgetResults.fixedProfit.toLocaleString()}</td>
+                          <td className="text-indigo-600 font-extrabold">${flexedBudgetResults.flexedProfit.toLocaleString()}</td>
+                          <td className="text-slate-500 font-bold font-sans">Net outcomes</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* CHAPTER 10: ANALYTICAL TECHNIQUES                                         */}
+        {/* ========================================================================= */}
+        {activeTab === 'analytics' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Banner Section */}
+            <section className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden font-sans">
+              <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                Chapter 10 Analysis
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-4 tracking-tight">Analytical Techniques & Cost Estimations</h2>
+              <p className="text-sm text-slate-600 mt-2 leading-relaxed font-sans">
+                Model worker repetitive efficiency parameters using geometric curves ($Y = aX^b$) and run cost-separations with High-Low and linear regression methodologies.
+              </p>
+            </section>
+
+            {/* Sub-tab Navigation */}
+            <div className="flex flex-wrap gap-1.5 border-b border-slate-200 pb-3 font-sans">
+              {[
+                { id: 'theory-learning', label: '1. Learning Curve Model' },
+                { id: 'theory-highlow', label: '2. High-Low Method Solver' },
+                { id: 'theory-regression', label: '3. Regression & Correlation Solver' },
+                { id: 'qualitative-analytics', label: '4. Simulation, Focus Groups & Market Research' }
+              ].map((sub) => (
+                <button
+                  key={sub.id}
+                  onClick={() => setAnalyticsSubTab(sub.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    analyticsSubTab === sub.id
+                      ? 'bg-indigo-50 text-indigo-600 border border-indigo-200/50'
+                      : 'text-slate-400 hover:text-slate-900 hover:bg-slate-200/40'
+                  }`}
+                >
+                  {sub.label}
+                </button>
+              ))}
+            </div>
+
+            {/* 1. Learning Curve */}
+            {analyticsSubTab === 'theory-learning' && (
+              <div className="space-y-6 animate-fadeIn font-sans font-sans">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 font-sans">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2 font-sans font-sans">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> Syllabus Theoretical Foundations
+                  </h3>
+                  <div className="space-y-2 text-xs text-slate-600 leading-relaxed font-sans">
+                    <p>
+                      <strong>The Learning Curve Effect:</strong> As workers repeat complex, manual operations, their average time per unit drops geometrically. Each time output doubles, cumulative average hours fall by a constant percentage (e.g., 80% or 90%).
+                    </p>
+                    <p>
+                      <strong>The Steady State Plateau:</strong> Workers eventually hit a maximum speed limit (machine limits or human limits) where further learning ceases. All subsequent units are completed at the incremental time of the final step.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Mathematical Formulas */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
+                  <h3 className="text-sm font-bold text-slate-900">Mathematical Formulas</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 font-mono text-xs text-indigo-700 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">The Cumulative Average Model</span>
+                      {"Y = a * X ^ b"}
+                      <span className="text-[10px] text-slate-500 block mt-1 font-sans">Where Y = cumulative average time, a = time for unit 1, X = total units, b = index of learning.</span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Index of Learning (b)</span>
+                      {"b = log(Learning Rate as decimal) / log(2)"}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simulator */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-sans">
+                  {/* Controls */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs font-sans">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">Learning curve drivers</h4>
+                    <div className="space-y-3">
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Time for 1st unit (a)</span>
+                          <span className="font-mono text-slate-900 font-bold">{timeUnit1} hours</span>
+                        </div>
+                        <input type="range" min="10" max="200" value={timeUnit1} onChange={(e) => setTimeUnit1(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Learning Rate %</span>
+                          <span className="font-mono text-slate-900 font-bold">{learnRatePct}%</span>
+                        </div>
+                        <input type="range" min="60" max="99" value={learnRatePct} onChange={(e) => setLearnRatePct(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+                      <div>
+                        <div className="flex justify-between mb-1 text-slate-500">
+                          <span>Cumulative Volume (X)</span>
+                          <span className="font-mono text-slate-900 font-bold">{cumulativeQtyX} units</span>
+                        </div>
+                        <input type="range" min="1" max="64" value={cumulativeQtyX} onChange={(e) => setCumulativeQtyX(Number(e.target.value))} className="w-full accent-indigo-600" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* outputs */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 text-xs">
+                      <span className="bg-amber-50 text-amber-600 border border-amber-200 px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider block w-fit font-sans">Y = aX^b Solver</span>
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono font-bold">
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                          <span className="text-[10px] text-slate-500 block uppercase font-bold tracking-wider font-sans font-normal font-sans">Learning Index (b)</span>
+                          <span className="text-xl block mt-1">{learningCalculations.b}</span>
+                        </div>
+                        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                          <span className="text-[10px] text-slate-500 block uppercase font-bold tracking-wider font-sans font-normal font-sans">Cumulative Average</span>
+                          <span className="text-xl block mt-1">{learningCalculations.avgTimeX} hours</span>
+                        </div>
+                        <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl text-center text-amber-800">
+                          <span className="text-[10px] text-amber-600 block uppercase font-bold tracking-wider font-sans font-normal font-sans">Total Cumulative Hours</span>
+                          <span className="text-2xl block mt-1 font-black">{learningCalculations.totalTimeX} hours</span>
+                        </div>
+                      </div>
+
+                      <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 font-mono flex justify-between items-center text-slate-600">
+                        <span className="font-sans text-xs">Incremental assembly hours for unit {cumulativeQtyX} alone:</span>
+                        <span className="font-bold text-slate-900 bg-white border border-slate-200 px-2 py-1 rounded">
+                          {learningCalculations.incrementalX} hours
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Doubling Progression Table */}
+                    <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm text-xs">
+                      <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider mb-3 font-sans">Doubling Checklist (Verification Table)</h4>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left font-mono">
+                          <thead>
+                            <tr className="border-b border-slate-100 text-slate-400 font-bold font-sans">
+                              <th className="pb-2">Units (X)</th>
+                              <th className="pb-2">Cumulative Average per Unit (Y)</th>
+                              <th className="pb-2 text-right">Total Cumulative Hours</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-100">
+                            {learningCalculations.progressTable.map((row) => (
+                              <tr key={row.qty}>
+                                <td className="py-2.5 font-bold text-slate-900">{row.qty}</td>
+                                <td>{row.avg} hours</td>
+                                <td className="text-right text-amber-600 font-bold">{row.total} hours</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 2. High-Low Method Solver */}
+            {analyticsSubTab === 'theory-highlow' && (
+              <div className="space-y-6 animate-fadeIn text-xs font-sans">
+                {/* EDUCATIONAL HIGH-LOW LESSON */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-indigo-500" /> High-Low Method: Explained Simply
+                  </h3>
+                  <div className="space-y-2 text-slate-600 leading-relaxed text-xs">
+                    <p>
+                      <strong>What is a Mixed (Semi-Variable) Cost?</strong> In management accounting, some costs consist of both a <strong>fixed element</strong> (like a monthly phone line rental charge) and a <strong>variable element</strong> (like a charge per call minute). 
+                    </p>
+                    <p>
+                      The <strong>High-Low Method</strong> is a simple technique used to separate these two cost behaviors from historical records. By analyzing the periods of highest and lowest activity, we can isolate the variable cost rate and subsequently determine the fixed portion.
+                    </p>
+
+                    <h4 className="font-extrabold text-slate-900 mt-3 block">Step-by-Step Mathematical Instructions:</h4>
+                    <ol className="list-decimal list-inside text-slate-500 space-y-2.5 bg-slate-50 p-4 rounded-xl border border-slate-200 font-mono">
+                      <li>
+                        <strong className="text-indigo-600 font-sans">Step 1: Isolate extremes based on VOLUME (not costs!)</strong>
+                        <br />Find the period with the highest production volume and the lowest production volume. Note down their respective total costs.
+                      </li>
+                      <li>
+                        <strong className="text-indigo-600 font-sans">Step 2: Calculate Variable Cost per Unit ($b$)</strong>
+                        <br />Divide the difference in total costs by the difference in activity units:
+                        <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 font-bold block mt-1">
+                          {"Variable Cost per Unit (b) = (Cost at High Volume - Cost at Low Volume) / (High Volume Units - Low Volume Units)"}
+                        </div>
+                      </li>
+                      <li>
+                        <strong className="text-indigo-600 font-sans">Step 3: Solve for Fixed Costs ($a$)</strong>
+                        <br />Substitute the Variable Cost per Unit ($b$) back into either the High or Low scenario total cost equation:
+                        <div className="bg-white p-2.5 rounded border border-slate-200 text-indigo-800 font-bold block mt-1">
+                          {"Total Fixed Cost (a) = Total Cost - (Variable Cost per Unit * Activity Volume)"}
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  {/* Inputs */}
+                  <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl space-y-4">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2">High/Low Cost Coordinates</h4>
+                    
+                    <div className="space-y-4">
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase block">Peak (High) Period</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase">Volume</label>
+                            <input type="number" value={highVolume} onChange={(e) => setHighVolume(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase">Cost ($)</label>
+                            <input type="number" value={highCost} onChange={(e) => setHighCost(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-2">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase block">Floor (Low) Period</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase">Volume</label>
+                            <input type="number" value={lowVolume} onChange={(e) => setLowVolume(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                          <div>
+                            <label className="text-[9px] text-slate-400 block uppercase">Cost ($)</label>
+                            <input type="number" value={lowCost} onChange={(e) => setLowCost(Number(e.target.value))} className="w-full bg-white border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-xs" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* outputs */}
+                  <div className="lg:col-span-2 bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex flex-col justify-between animate-fadeIn">
+                    {highLowSolutions ? (
+                      <div className="space-y-4">
+                        <span className="bg-amber-100 text-amber-700 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider block w-fit font-sans">High-Low Splitting Output</span>
+                        <h3 className="text-xl font-bold text-slate-900 font-sans">Separated Cost Structures</h3>
+                        <p className="text-slate-500 leading-relaxed font-sans">
+                          Separating mixed utilities and administrative services using historical volume extremes.
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 font-mono">
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                            <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider font-sans font-normal font-sans">Variable Cost per Unit</span>
+                            <span className="text-2xl font-black text-slate-900 block mt-1">${highLowSolutions.varCostPerUnit}</span>
+                          </div>
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
+                            <span className="text-[10px] text-slate-500 font-bold block uppercase tracking-wider font-sans font-normal font-sans">Total Fixed Costs</span>
+                            <span className="text-2xl font-black text-indigo-600 block mt-1">${highLowSolutions.fixedCosts}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-slate-400 text-xs text-center py-12 font-sans">Input valid activity variations to run high-low separations.</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. Regression & Correlation Solver */}
+            {analyticsSubTab === 'theory-regression' && (
+              <div className="space-y-6 animate-fadeIn text-xs font-sans">
+                {/* Formulas Header */}
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-3">
+                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-1.5 font-sans">
+                    <Grid className="w-4 h-4 text-indigo-500" /> Regression & Correlation Master Formulas
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono text-[11px] text-indigo-700 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Slope Coefficient (b)</span>
+                      {"b = (nΣxy - ΣxΣy) / (nΣx² - (Σx)²)"}
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Y-Intercept / Fixed Cost (a)</span>
+                      {"a = (Σy / n) - b * (Σx / n)"}
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Correlation Coefficient (r)</span>
+                      {"r = (nΣxy - ΣxΣy) / √[(nΣx² - (Σx)²)(nΣy² - (Σy)²)]"}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                  {/* Grid Inputs Table */}
+                  <div className="lg:col-span-5 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-4">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2 font-sans font-sans">
+                      Editable Historical Database
+                    </h4>
+                    <p className="text-slate-500 leading-relaxed font-sans text-[11px]">
+                      Change the values below to watch the regression parameters and correlation coefficients recalculate.
+                    </p>
+
+                    <div className="space-y-2 font-mono">
+                      <div className="grid grid-cols-12 gap-2 text-slate-400 font-bold border-b border-slate-100 pb-1 font-sans">
+                        <div className="col-span-2">No.</div>
+                        <div className="col-span-5">Activity (X)</div>
+                        <div className="col-span-5">Total Cost (Y)</div>
+                      </div>
+                      
+                      <div className="grid grid-cols-12 gap-2 items-center">
+                        <div className="col-span-2 text-slate-400">1</div>
+                        <input type="number" value={regPoint1X} onChange={(e) => setRegPoint1X(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                        <input type="number" value={regPoint1Y} onChange={(e) => setRegPoint1Y(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                      </div>
+
+                      <div className="grid grid-cols-12 gap-2 items-center">
+                        <div className="col-span-2 text-slate-400">2</div>
+                        <input type="number" value={regPoint2X} onChange={(e) => setRegPoint2X(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                        <input type="number" value={regPoint2Y} onChange={(e) => setRegPoint2Y(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                      </div>
+
+                      <div className="grid grid-cols-12 gap-2 items-center">
+                        <div className="col-span-2 text-slate-400">3</div>
+                        <input type="number" value={regPoint3X} onChange={(e) => setRegPoint3X(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                        <input type="number" value={regPoint3Y} onChange={(e) => setRegPoint3Y(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                      </div>
+
+                      <div className="grid grid-cols-12 gap-2 items-center">
+                        <div className="col-span-2 text-slate-400">4</div>
+                        <input type="number" value={regPoint4X} onChange={(e) => setRegPoint4X(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                        <input type="number" value={regPoint4Y} onChange={(e) => setRegPoint4Y(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                      </div>
+
+                      <div className="grid grid-cols-12 gap-2 items-center">
+                        <div className="col-span-2 text-slate-400">5</div>
+                        <input type="number" value={regPoint5X} onChange={(e) => setRegPoint5X(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                        <input type="number" value={regPoint5Y} onChange={(e) => setRegPoint5Y(Number(e.target.value))} className="col-span-5 bg-slate-50 border border-slate-200 p-1.5 rounded font-mono text-slate-900 text-center focus:border-indigo-500 focus:outline-none" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calculations & Results */}
+                  <div className="lg:col-span-7 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-4">
+                    <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider border-b border-slate-100 pb-2 font-sans font-sans font-sans">
+                      Step-by-Step Analytical Outputs
+                    </h4>
+
+                    {regressionResults ? (
+                      <div className="space-y-4 font-mono text-xs">
+                        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-center text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200/50">
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-sans uppercase">ΣX</span>
+                            <span className="font-bold">{regressionResults.sumX}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-sans uppercase">ΣY</span>
+                            <span className="font-bold">{regressionResults.sumY}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-sans uppercase">ΣXY</span>
+                            <span className="font-bold">{regressionResults.sumXY}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-sans uppercase">ΣX²</span>
+                            <span className="font-bold">{regressionResults.sumX2}</span>
+                          </div>
+                          <div>
+                            <span className="text-[10px] text-slate-400 block font-sans uppercase">ΣY²</span>
+                            <span className="font-bold">{regressionResults.sumY2}</span>
+                          </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Slope / Variable Cost (b)</span>
+                            <span className="text-lg font-black text-slate-900 block font-sans">${regressionResults.b}</span>
+                            <span className="text-[10px] text-slate-400 font-sans">Increase in cost per unit increase in X.</span>
+                          </div>
+
+                          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-1">
+                            <span className="text-[10px] text-slate-500 block uppercase font-bold font-sans">Y-Intercept / Fixed Cost (a)</span>
+                            <span className="text-lg font-black text-slate-900 block font-sans">${regressionResults.a}</span>
+                            <span className="text-[10px] text-slate-400 font-sans">Baseline flat operational costs.</span>
+                          </div>
+                        </div>
+
+                        {/* Correlation coefficients block */}
+                        <div className="pt-3 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-indigo-50/50 border border-indigo-100 p-4 rounded-xl font-sans">
+                            <span className="text-[10px] text-indigo-600 block uppercase font-bold font-sans">Correlation Coefficient (r)</span>
+                            <span className="text-2xl font-black text-indigo-700 block mt-1 font-mono">{regressionResults.r}</span>
+                            <span className="text-[10px] text-slate-500 block mt-1 font-sans">
+                              {parseFloat(regressionResults.r) > 0.8 
+                                ? "Very strong positive correlation" 
+                                : parseFloat(regressionResults.r) > 0.5 
+                                ? "Moderate positive correlation" 
+                                : "Weak correlation"}
+                            </span>
+                          </div>
+
+                          <div className="bg-emerald-50/50 border border-emerald-100 p-4 rounded-xl font-sans">
+                            <span className="text-[10px] text-emerald-600 block uppercase font-bold font-sans">Determination Index (r²)</span>
+                            <span className="text-2xl font-black text-emerald-700 block mt-1 font-mono">{(parseFloat(regressionResults.r2)*100).toFixed(1)}%</span>
+                            <span className="text-[10px] text-slate-500 block mt-1 font-sans">
+                              {`Proportion of cost changes directly caused by activity variations.`}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-slate-400 text-center py-10 font-sans">Adjust inputs to resolve regression slope parameters.</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 4. Qualitative Techniques: Simulation, Focus Groups & Market Research */}
+            {analyticsSubTab === 'qualitative-analytics' && (
+              <div className="space-y-6 animate-fadeIn text-xs font-sans">
+                <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                  <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                    <Users className="w-5 h-5 text-indigo-500" /> Qualitative & Advanced Analytical Methods
+                  </h3>
+                  <p className="text-slate-600 leading-relaxed text-xs">
+                    While quantitative cost estimation provides baseline numbers, advanced strategic decisions rely on qualitative intelligence and predictive model simulations:
+                  </p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                    {/* Simulation Card */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                      <span className="font-extrabold text-slate-900 block text-sm flex items-center gap-1.5"><RotateCw className="w-4 h-4 text-indigo-600" /> Monte Carlo Simulation</span>
+                      <p className="text-slate-600 leading-relaxed font-sans">
+                        Simulation is a computer-based modeling technique used when multiple project variables (e.g., selling prices, unit material costs, sales volumes) are simultaneously uncertain.
+                      </p>
+                      <strong className="text-indigo-600 block mt-1 font-sans">Mechanism:</strong>
+                      <p className="text-slate-500 font-sans font-sans">
+                        The model runs thousands of iterations, substituting randomized probability distributions for each uncertain variable. This generates a comprehensive probability distribution of the final profit outcomes, highlighting the likelihood of a project making a loss.
+                      </p>
+                    </div>
+
+                    {/* Focus Groups Card */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 font-sans">
+                      <span className="font-extrabold text-slate-900 block text-sm flex items-center gap-1.5"><Users className="w-4 h-4 text-indigo-600" /> Focus Groups</span>
+                      <p className="text-slate-600 leading-relaxed">
+                        A qualitative market research tool comprising small, highly structured group discussions led by a professional moderator to discuss product features, packaging, or brand perceptions.
+                      </p>
+                      <strong className="text-indigo-600 block mt-1">Role in Pricing:</strong>
+                      <p className="text-slate-500 font-sans font-sans">
+                        Focus groups provide deep behavioral insights into consumer willingness to pay, perceived product quality, and expectations. Helps identify premium features that justify a higher price point before launch.
+                      </p>
+                    </div>
+
+                    {/* Market Research Card */}
+                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 font-sans">
+                      <span className="font-extrabold text-slate-900 block text-sm flex items-center gap-1.5"><Search className="w-4 h-4 text-indigo-600" /> Market Research</span>
+                      <p className="text-slate-600 leading-relaxed font-sans">
+                        The systematic gathering, recording, and analysis of qualitative and quantitative data regarding market dynamics, customer segments, and competitor behaviors.
+                      </p>
+                      <strong className="text-indigo-600 block mt-1">Exam Application:</strong>
+                      <p className="text-slate-500 font-sans font-sans font-sans">
+                        Essential to determine demand curve shifts, estimate price elasticity of demand (PED), map competitor pricing structures, and minimize decision risk before launching skimming or penetration strategies.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* TAB 5: DYNAMIC PRACTICE ARENA                                             */}
+        {/* ========================================================================= */}
+        {activeTab === 'practice' && (
+          <div className="space-y-6 animate-fadeIn">
+            {/* Banner Section */}
+            <section className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm relative overflow-hidden">
+              <span className="bg-indigo-50 text-indigo-600 border border-indigo-200 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase">
+                Active revision practice
+              </span>
+              <h2 className="text-2xl font-black text-slate-900 mt-4 tracking-tight">Dynamic Practice Arena (Non-Fixed)</h2>
+              <p className="text-sm text-slate-600 mt-2 leading-relaxed font-sans">
+                Test your skills with our infinite randomized question engines. Select a conceptual block, input your calculated values, and receive dynamic, step-by-step math validations instantly!
+              </p>
+            </section>
+
+            {/* Selector Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <button 
+                onClick={() => handleNextQuiz('roi')}
+                className={`p-3 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center gap-1.5 ${activeQuizType === 'roi' ? 'bg-indigo-500 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+              >
+                <DollarSign className="w-4 h-4" />
+                <span>ROI Pricing Practice</span>
+              </button>
+              <button 
+                onClick={() => handleNextQuiz('ped')}
+                className={`p-3 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center gap-1.5 ${activeQuizType === 'ped' ? 'bg-indigo-500 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+              >
+                <TrendingUp className="w-4 h-4" />
+                <span>PED Elasticity Practice</span>
+              </button>
+              <button 
+                onClick={() => handleNextQuiz('learning')}
+                className={`p-3 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center gap-1.5 ${activeQuizType === 'learning' ? 'bg-indigo-500 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+              >
+                <Zap className="w-4 h-4" />
+                <span>Learning Curve Practice</span>
+              </button>
+              <button 
+                onClick={() => handleNextQuiz('highlow')}
+                className={`p-3 rounded-xl border text-xs font-bold transition-all text-center flex flex-col items-center gap-1.5 ${activeQuizType === 'highlow' ? 'bg-indigo-500 text-white border-indigo-600 shadow-sm' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}
+              >
+                <Calculator className="w-4 h-4" />
+                <span>High-Low Separation</span>
+              </button>
+            </div>
+
+            {/* Quiz Card */}
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl space-y-6">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3 font-sans">
+                <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wide flex items-center">
+                  <Target className="w-4 h-4 text-indigo-500 mr-1.5" /> 
+                  Active Scenario Question Card
+                </h3>
+                <button 
+                  onClick={() => handleNextQuiz(activeQuizType)}
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center transition-all"
+                >
+                  <RefreshCw className="w-3 h-3 mr-1.5" /> Next Randomized Question
+                </button>
+              </div>
+
+              {/* Dynamic Question Text */}
+              {activeQuizType === 'roi' && (
+                <div className="space-y-4">
+                  <p className="text-sm text-slate-700 leading-relaxed font-sans">
+                    A company holds <strong>${quizState.nca.toLocaleString()}</strong> in Non-Current Assets and <strong>${quizState.wc.toLocaleString()}</strong> in working capital. 
+                    Its annual target return on investment is exactly <strong>{quizState.roi}%</strong>. 
+                    Assuming a unit full cost of <strong>${quizState.fullCost.toFixed(2)}</strong> and budgeted sales volume of <strong>{quizState.units.toLocaleString()} units</strong>, 
+                    what should be the Target ROI Selling Price per unit?
+                  </p>
+                  
+                  <div className="space-y-1">
+                    <label className="text-xs text-slate-500 font-bold block">Input Your Answer ($)</label>
+                    <input 
+                      type="number" step="0.01" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} placeholder="e.g. 15.50"
+                      className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48 font-mono"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {activeQuizType === 'ped' && (
+                <div className="space-y-4 font-sans font-sans">
+                  <p className="text-sm text-slate-700 leading-relaxed font-sans">
+                    When the price of a diagnostic kit changes from <strong>${quizState.p1}</strong> to <strong>${quizState.p2}</strong>, 
+                    the market demand jumps from <strong>{quizState.q1.toLocaleString()} units</strong> to <strong>{quizState.q2.toLocaleString()} units</strong>. 
+                    Calculate the Price Elasticity of Demand (PED) absolute value and classify the sensitivity.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-xs text-slate-500 font-bold block font-sans font-sans">Absolute PED Factor</label>
+                      <input 
+                        type="number" step="0.01" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} placeholder="e.g. 1.25"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48 font-mono"
+                      />
+                    </div>
+                    <div className="space-y-1 font-sans">
+                      <label className="text-xs text-slate-500 font-bold block">Classification (elastic / inelastic)</label>
+                      <input 
+                        type="text" value={userAnswer2} onChange={(e) => setUserAnswer2(e.target.value)} placeholder="elastic or inelastic"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48 font-sans font-bold"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeQuizType === 'learning' && (
+                <div className="space-y-4 font-sans font-sans">
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    The assembly time for the very first unit is <strong>{quizState.a} hours</strong> under an active <strong>{quizState.rate}% learning curve</strong>. 
+                    What is the cumulative average time per unit and cumulative total hours to produce <strong>{quizState.x} units</strong>?
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1 font-sans">
+                      <label className="text-xs text-slate-500 font-bold block">Cumulative Average Time per Unit (hours)</label>
+                      <input 
+                        type="number" step="0.01" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} placeholder="e.g. 64.00"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48"
+                      />
+                    </div>
+                    <div className="space-y-1 font-sans">
+                      <label className="text-xs text-slate-500 font-bold block">Total Cumulative hours (hours)</label>
+                      <input 
+                        type="number" step="0.1" value={userAnswer2} onChange={(e) => setUserAnswer2(e.target.value)} placeholder="e.g. 256.0"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeQuizType === 'highlow' && (
+                <div className="space-y-4">
+                  <p className="text-sm text-slate-700 leading-relaxed font-sans font-sans font-sans">
+                    A mixed utility cost records <strong>${quizState.highC.toLocaleString()}</strong> at peak activity of <strong>{quizState.highV.toLocaleString()} units</strong>. 
+                    During the slowest period of <strong>{quizState.lowV.toLocaleString()} units</strong>, costs register at <strong>${quizState.lowC.toLocaleString()}</strong>. 
+                    Use the High-Low method to find the unit variable cost rate and total fixed costs.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-1 font-sans">
+                      <label className="text-xs text-slate-500 font-bold block">Variable cost per unit ($)</label>
+                      <input 
+                        type="number" step="0.01" value={userAnswer} onChange={(e) => setUserAnswer(e.target.value)} placeholder="e.g. 5.00"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48 font-mono"
+                      />
+                    </div>
+                    <div className="space-y-1 font-sans">
+                      <label className="text-xs text-slate-500 font-bold block">Total Fixed Costs ($)</label>
+                      <input 
+                        type="number" value={userAnswer2} onChange={(e) => setUserAnswer2(e.target.value)} placeholder="e.g. 15000"
+                        className="bg-slate-50 border border-slate-200 px-3 py-2 rounded-xl text-sm font-mono text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:outline-none w-48 font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="pt-4 border-t border-slate-100 flex gap-2">
+                <button 
+                  onClick={handleCheckQuiz}
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition-all shadow-sm"
+                >
+                  Verify Calculations
+                </button>
+              </div>
+
+              {/* Live dynamic feedback */}
+              {quizFeedback && (
+                <div className={`p-4 rounded-xl border text-xs leading-relaxed ${quizFeedback.correct ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-rose-50 text-rose-700 border-rose-200'}`}>
+                  {quizFeedback.text}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </main>
+
+      {/* --- Footer Status Banner --- */}
+      <footer className="bg-white border-t border-slate-200 px-6 py-4 mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-slate-400 font-medium font-sans">
+          <div>
+            <span>Pricing, Risk, Budgetary & Analytical Portal &copy; 2026. All Rights Reserved.</span>
+          </div>
+          <div className="flex items-center gap-1.5 font-sans">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            Standard Revision Environment Active
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
